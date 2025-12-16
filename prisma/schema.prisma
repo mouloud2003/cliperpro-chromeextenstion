@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+
+}
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  settings  UserSettings?
+  clips     Clip[]
+  summaries ClipSummary[]
+  usage     UsageMonthly[]
+}
+model UserSettings {
+  userId               String  @id
+  aiEnabled            Boolean @default(false)
+  defaultSummaryFormat String  @default("bullet_points")
+  user User @relation(fields: [userId], references: [id])
+}
+model Clip {
+  id        String   @id @default(cuid())
+  userId    String
+  sourceId  String?
+  text      String
+  url       String?
+  title     String?
+  createdAt DateTime @default(now())
+
+  user      User          @relation(fields: [userId], references: [id])
+  summaries ClipSummary[]
+
+  @@unique([userId, sourceId])
+}
+model ClipSummary {
+  id            String   @id @default(cuid())
+  userId        String
+  clipId        String
+  format        String
+  model         String
+  promptVersion Int      @default(1)
+  inputHash     String
+  summaryTitle  String?
+  summaryBody   String
+  status        String   @default("completed")
+  createdAt     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  clip Clip @relation(fields: [clipId], references: [id])
+
+  @@index([clipId, format])
+  @@unique([clipId, format, model, promptVersion, inputHash])
+}
+model UsageMonthly {
+  id           String   @id @default(cuid())
+  userId       String
+  monthStart   DateTime
+  summaryCount Int      @default(0)
+  limit        Int      @default(100)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, monthStart])
+}
