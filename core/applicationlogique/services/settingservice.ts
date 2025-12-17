@@ -1,5 +1,5 @@
 import type { IUserSettingsRepository } from "../../ports/repos";
-import type { SummaryFormat, UserSettingsDTO } from "../../domain/types";
+import type { UserSettingsDTO } from "../../domain/types";
 import { AppError } from "../errors";
 import { isSummaryFormat, DEFAULT_SETTINGS } from "../utils/normalisetext";
 

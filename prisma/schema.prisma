@@ -53,7 +53,7 @@ model ClipSummary {
   id            String   @id @default(cuid())
   userId        String
   clipId        String
-  format        String
+  format        SummaryFormat
   model         String
   promptVersion Int      @default(1)
   inputHash     String

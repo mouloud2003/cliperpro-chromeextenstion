@@ -35,6 +35,20 @@ export type SummaryDTO = {
   createdAt: string;
   fromCache: boolean;
 };
+// the clip summary row object that represents a single row of summary data in the database
+export type ClipSummaryRow = {
+  id: string;
+  clipId: string;
+  userId: string;
+  format: SummaryFormat;
+  title?: string;
+  body: string;
+  model: string;
+  promptVersion: number;
+  inputHash?: string;
+  createdAt: Date;
+};
+
 // the user settings object that contains the user preferences for the application
 export type UserSettingsDTO = {
   aiEnabled: boolean;
@@ -54,6 +68,14 @@ export type UsageRow = {
   limit: number;
 };
 // finally we define a generic error code type to standardize error handling across the application
+export type CacheKeyParams = {
+  text: string;
+  format: string;
+  language?: string;
+  model: string;
+  promptVersion: number;
+};
+// these error codes can be used in exceptions and error responses
 export type ErrorCode =
   | "NOT_FOUND"
   | "UNAUTHORIZED"
@@ -66,4 +88,6 @@ export type ErrorCode =
   | "CLIP_CREATION_FAILED"
   | "SUMMARY_GENERATION_FAILED"
   | "INVALID_SUMMARY_FORMAT"
-  | "QUOTA_EXCEEDED";
+  | "QUOTA_EXCEEDED"
+  | "AI_DISABLED"
+  | "AI_PROVIDER_ERROR";

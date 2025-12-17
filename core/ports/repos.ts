@@ -3,8 +3,8 @@
 import type {
   ClipDTO,
   ClipDetailDTO,
+  ClipSummaryRow,
   CreateClipInput,
-  SummaryDTO,
   SummaryFormat,
   UsageRow,
   UserSettingsDTO,
@@ -31,7 +31,8 @@ export interface IClipSummaryRepository {
     clipId: string;
     userId: string;
     format: SummaryFormat;
-  }): Promise<SummaryDTO | null>;
+    inputHash: string;
+  }): Promise<ClipSummaryRow | null>;
 
   // create a new summary for a clip
   create(params: {
@@ -43,7 +44,7 @@ export interface IClipSummaryRepository {
     inputHash: string; // hash of text+format (for more accurate tracking/caching)
     title?: string;
     body: string;
-  }): Promise<void>;
+  }): Promise<ClipSummaryRow>;
 }
 
 // interface for User Settings repository any object that implements IUserSettingsRepository must provide these methods

@@ -1,11 +1,16 @@
-//  define AI client interface that any AI service client must implement
-// to provide text summarization functionality
-import type { SummaryFormat } from "../domain/types";
-// IAIClient interface with a summarize method
+import { SummaryFormat } from "../domain/types";
+export type SummarizeInput = {
+  text: string;
+  format: SummaryFormat;
+  language?: string;
+};
+
+export type SummarizeOutput = {
+  title?: string;
+  body: string;
+  model: string;
+};
+
 export interface IAIClient {
-  summarize(params: {
-    text: string;
-    format: SummaryFormat;
-    language?: string; // summary language (optional)
-  }): Promise<{ title?: string; body: string; model: string }>;
+  summarize(input: SummarizeInput): Promise<SummarizeOutput>;
 }
