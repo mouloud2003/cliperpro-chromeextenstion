@@ -81,7 +81,7 @@ export async function GET() {
     const clipService = new ClipService(new ClipRepoPrisma());
     const data = await clipService.listUserClips(userId, 50);
 
-    return NextResponse.json(data, { status: 200 });
+    return NextResponse.json({ ok: true, data }, { status: 200 });
   } catch (e: unknown) {
     if (e instanceof AppError) {
       return NextResponse.json(

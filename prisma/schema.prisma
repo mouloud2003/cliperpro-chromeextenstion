@@ -13,6 +13,12 @@ datasource db {
   url      = env("DATABASE_URL")
 
 }
+enum SummaryFormat {
+  paragraph
+  bullet_points
+  study_notes
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -26,7 +32,7 @@ model User {
 model UserSettings {
   userId               String  @id
   aiEnabled            Boolean @default(false)
-  defaultSummaryFormat String  @default("bullet_points")
+  defaultSummaryFormat SummaryFormat  @default(bullet_points)
   user User @relation(fields: [userId], references: [id])
 }
 model Clip {

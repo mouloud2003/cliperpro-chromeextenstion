@@ -1,4 +1,5 @@
 //  create utility functions for text normalization and validation
+import { SummaryFormat, UserSettingsDTO } from "@/core/domain/types";
 import { AppError } from "../errors";
 //cheking max length of text and normalising it
 export const MAX_TEXT_LENGTH = 20000;
@@ -25,3 +26,11 @@ export function validateClipText(text: string) {
     );
   }
 }
+export function isSummaryFormat(x: unknown): x is SummaryFormat {
+  return x === "paragraph" || x === "bullet_points" || x === "study_notes";
+}
+
+export const DEFAULT_SETTINGS: UserSettingsDTO = {
+  aiEnabled: false,
+  defaultSummaryFormat: "bullet_points",
+} as const satisfies UserSettingsDTO;
