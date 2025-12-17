@@ -6,6 +6,7 @@ import type {
   CreateClipInput,
   SummaryDTO,
   SummaryFormat,
+  UsageRow,
   UserSettingsDTO,
 } from "../domain/types";
 
@@ -60,13 +61,9 @@ export interface IUserSettingsRepository {
 // interface for Usage repository any object that implements IUsageRepository must provide these methods
 // Responsible for tracking monthly usage (quota)
 export interface IUsageRepository {
-  // get or create the current month's record
-  getOrCreateMonth(
-    userId: string,
-    monthStartISO: string,
-    defaultLimit: number
-  ): Promise<{ monthStart: string; summaryCount: number; limit: number }>;
+  getOrCreateMonth(userId: string, monthStart: Date): Promise<UsageRow>;
 
-  // increment the summary count for the month
-  incrementSummaryCount(userId: string, monthStartISO: string): Promise<void>;
+  // Try to consume one summary from the user's monthly quota
+  // Returns the updated UsageRow if successful, or null if quota exceeded
+  tryConsumeSummary(userId: string, monthStart: Date): Promise<UsageRow | null>;
 }

@@ -47,6 +47,12 @@ export type UsageDTO = {
   limit: number;
   remaining: number;
 };
+// the usage row object that represents a single row of usage data in the database
+export type UsageRow = {
+  monthStart: Date;
+  summaryCount: number;
+  limit: number;
+};
 // finally we define a generic error code type to standardize error handling across the application
 export type ErrorCode =
   | "NOT_FOUND"
@@ -59,4 +65,5 @@ export type ErrorCode =
   | "AI_SERVICE_UNAVAILABLE"
   | "CLIP_CREATION_FAILED"
   | "SUMMARY_GENERATION_FAILED"
-  | "INVALID_SUMMARY_FORMAT";
+  | "INVALID_SUMMARY_FORMAT"
+  | "QUOTA_EXCEEDED";
