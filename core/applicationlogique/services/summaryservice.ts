@@ -7,7 +7,6 @@ import { makeSummaryCacheKey } from "../utils/hash"; // عندك hash.ts
 import { SettingsService } from "./settingservice";
 import { UsageService } from "./usageservice";
 import { ClipService } from "./clipservice";
-import { ca } from "zod/locales";
 
 export class SummaryService {
   constructor(
@@ -59,6 +58,8 @@ export class SummaryService {
         fromCache: true,
       };
     }
+    // 5) quota consume (atomic)  atomic means that the database operation is done in a way that ensures data integrity even in concurrent scenarios
+    await this.usageService.consumeOneSummary(userId);
     try {
       // 6) AI call (هنا فقط)
       const out = await this.aiClient.summarize({
@@ -77,8 +78,6 @@ export class SummaryService {
         title: out.title,
         body: out.body,
       });
-      // 5) quota consume (atomic)  atomic means that the database operation is done in a way that ensures data integrity even in concurrent scenarios
-      await this.usageService.consumeOneSummary(userId);
 
       // 8) return DTO
       return {
