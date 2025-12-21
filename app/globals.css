@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/**
+ * Clipper Pro V1 Global Styles
+ * RTL-first design with Arabic typography
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  /* RTL by default */
+  direction: rtl;
+  font-size: 16px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-arabic);
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* LTR override for specific elements */
+.ltr {
+  direction: ltr;
+  font-family: var(--font-latin);
+}
+
+.contentarea {
+  display: flex;
+  height: calc(100vh - 64px);
+  background-color: blueviolet;
+}
+.listcol {
+  background-color: yellow;
+  width: 400px;
+}
+.previewcol {
+  background-color: aqua;
+  flex-grow: 1;
+}
+
+/* for mobile */
+@media (max-width: 768px) {
+  .listcol {
+    width: 100%;
+  }
+  .previewcol {
+    display: none;
+  }
 }
