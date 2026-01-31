@@ -77,7 +77,7 @@ export function NotionCard({ clip, q }: { clip: ClipDTO; q: string }) {
 
   return (
     <Link
-      href={`/clips/${clip.id}`}
+      href={`/libreary/${clip.id}`}
       aria-label={`Open clip: ${clip.title ?? "Untitled clip"}`}
       className="block h-full outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 dark:focus-visible:ring-offset-slate-950 rounded-xl"
     >

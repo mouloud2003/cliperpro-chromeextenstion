@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
+import { IBM_Plex_Sans_Arabic, Inter } from "next/font/google";
 import "./globals.css";
 
+const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+  subsets: ["arabic"],
+  weight: ["400", "600"],
+  variable: "--font-ibm-plex-arabic",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-inter",
+});
+
 export const metadata: Metadata = {
-  title: "Clipper Pro — مكتبة المحتوى الذكية",
-  description: "احفظ ولخص محتواك بذكاء",
+  title: "Clipper Pro ",
+  description: "   Your Ultimate Learning Companion",
 };
 
 export default function RootLayout({
@@ -12,19 +25,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600&family=Inter:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html
+      lang="en"
+      dir="ltr"
+      className={`${ibmPlexSansArabic.variable} ${inter.variable}`}
+    >
       <body className="antialiased">{children}</body>
     </html>
   );

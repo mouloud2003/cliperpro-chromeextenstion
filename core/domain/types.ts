@@ -16,6 +16,7 @@ export type ClipDTO = {
   url?: string;
   textPreview: string;
   createdAt: string;
+  hasAiSummary?: boolean;
 };
 // the clip detail object that contains more detailed information about a specific clip we use it to show the clip detail view in the UI
 export type ClipDetailDTO = {
@@ -25,6 +26,7 @@ export type ClipDetailDTO = {
   url?: string;
   text: string;
   createdAt: string;
+  hasAiSummary?: boolean;
 };
 // the summary object that contains the summary information for a specific clip
 export type SummaryDTO = {

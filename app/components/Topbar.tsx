@@ -1,11 +1,7 @@
 import React from "react";
 import { Feather, Search, Settings } from "lucide-react";
+import Image from "next/image";
 import "./Topbar.css";
-
-interface TopbarProps {
-  quotaUsed: number;
-  quotaTotal: number;
-}
 
 export default function Topbar() {
   return (
@@ -36,9 +32,11 @@ export default function Topbar() {
           <Settings className="w-5 h-5" />
         </button>
         <div className="w-9 h-9 rounded-full bg-indigo-100 border border-indigo-200 flex items-center justify-center overflow-hidden hover:border-indigo-300 transition-colors">
-          <img
-            src="https://picsum.photos/100/100"
+          <Image
+            src="/bllk _ bachira.jpeg"
             alt="User"
+            width={36}
+            height={36}
             className="w-full h-full object-cover opacity-90"
           />
         </div>
