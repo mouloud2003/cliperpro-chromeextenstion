@@ -4,51 +4,45 @@ import React, { useMemo } from "react";
 import {
   ArrowTopRightOnSquareIcon,
   ClipboardIcon,
-  ChevronLeftIcon,
 } from "@heroicons/react/24/outline";
+import type { ClipDetailDTO } from "../../core/domain/types";
 
-type Props = {
-  title: string;
-  domain?: string;
-  url?: string;
-
-  createdAt?: string; // ISO string (optional)
-  timeAgo?: string; // e.g. "منذ ساعتين" (optional)
-
-  content: string; // full text (paragraphs separated by \n)
-  onBack?: () => void; // optional
-};
+function safeDomain(url?: string) {
+  if (!url) return "";
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return "";
+  }
+}
 
 export default function ClipContentSheet({
-  title,
-  domain,
-  url,
-  createdAt,
+  clip,
   timeAgo,
-  content,
-  onBack,
-}: Props) {
+}: {
+  clip: ClipDetailDTO;
+  timeAgo?: string; // optional, you can compute in your page
+}) {
+  const domain = useMemo(() => safeDomain(clip.url), [clip.url]);
+
   const dateLabel = useMemo(() => {
-    if (!createdAt) return "";
     try {
-      const d = new Date(createdAt);
-      // same style as screenshot: M/D/YYYY
-      return d.toLocaleDateString("en-US");
+      return new Date(clip.createdAt).toLocaleDateString("en-US");
     } catch {
       return "";
     }
-  }, [createdAt]);
+  }, [clip.createdAt]);
 
   const paragraphs = useMemo(() => {
-    return content
+    return clip.text
       .split("\n")
       .map((p) => p.trim())
       .filter(Boolean);
-  }, [content]);
+  }, [clip.text]);
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(content);
+      await navigator.clipboard.writeText(clip.text);
     } catch {}
   };
 
@@ -63,19 +57,19 @@ export default function ClipContentSheet({
             "overflow-hidden",
           ].join(" ")}
         >
-          {/* Top toolbar */}
+          {/* Toolbar */}
           <div className="px-5 sm:px-7 py-4 flex items-center justify-between">
-            {/* Left actions (RTL: appear on left visually) */}
+            {/* actions */}
             <div className="flex items-center gap-3">
               <button
                 type="button"
-                onClick={() => url && window.open(url, "_blank")}
-                disabled={!url}
+                onClick={() => clip.url && window.open(clip.url, "_blank")}
+                disabled={!clip.url}
                 className={[
                   "inline-flex items-center gap-2 rounded-xl px-3 py-2",
                   "text-sm font-semibold",
                   "border border-slate-200 hover:bg-slate-50",
-                  !url ? "opacity-50 cursor-not-allowed" : "",
+                  !clip.url ? "opacity-50 cursor-not-allowed" : "",
                 ].join(" ")}
               >
                 <ArrowTopRightOnSquareIcon className="w-5 h-5" />
@@ -92,31 +86,12 @@ export default function ClipContentSheet({
               </button>
             </div>
 
-            {/* Right source */}
-            <div className="flex items-center gap-3 text-right">
-              <div className="leading-tight">
-                <div className="text-xs text-slate-400 font-semibold">
-                  المصدر
-                </div>
-                <div dir="ltr" className="text-base font-bold text-slate-800">
-                  {domain || "—"}
-                </div>
+            {/* source */}
+            <div className="text-right leading-tight">
+              <div className="text-xs text-slate-400 font-semibold">المصدر</div>
+              <div dir="ltr" className="text-base font-bold text-slate-800">
+                {domain || "—"}
               </div>
-
-              {onBack ? (
-                <button
-                  type="button"
-                  onClick={onBack}
-                  className="rounded-full p-2 hover:bg-slate-50 border border-transparent hover:border-slate-200"
-                  title="رجوع"
-                >
-                  <ChevronLeftIcon className="w-5 h-5 text-slate-500" />
-                </button>
-              ) : (
-                <div className="rounded-full p-2 border border-transparent">
-                  <ChevronLeftIcon className="w-5 h-5 text-slate-300" />
-                </div>
-              )}
             </div>
           </div>
 
@@ -124,12 +99,10 @@ export default function ClipContentSheet({
 
           {/* Article */}
           <div className="px-6 sm:px-12 lg:px-16 py-10 sm:py-14">
-            {/* Title */}
             <h1 className="text-center text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-[1.25]">
-              {title}
+              {clip.title || "بدون عنوان"}
             </h1>
 
-            {/* Meta row */}
             <div className="mt-8 flex items-center justify-center gap-4 text-sm text-slate-500">
               {timeAgo ? <span>{timeAgo}</span> : null}
               {dateLabel ? (
@@ -139,7 +112,6 @@ export default function ClipContentSheet({
               ) : null}
             </div>
 
-            {/* Body */}
             <div className="mt-10 border-t border-slate-100 pt-10">
               <div className="mx-auto max-w-3xl space-y-7 text-[17px] sm:text-[18px] text-slate-700 leading-9">
                 {paragraphs.map((p, i) => (

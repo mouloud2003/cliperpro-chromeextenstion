@@ -7,7 +7,7 @@ const NOW = Date.now();
 export default function Home() {
   const MOCK: ClipDTO[] = [
     {
-      id: "a1",
+      id: "1",
       title: "RTL Library Grid — Notion-style calm cards",
       url: "https://www.youtube.com/watch?v=abc",
       textPreview:
@@ -16,7 +16,7 @@ export default function Home() {
       hasAiSummary: true,
     },
     {
-      id: "b2",
+      id: "2",
       title: "Design notes: less shadow, more clarity",
       url: "https://notion.so/page",
       textPreview:
@@ -25,7 +25,7 @@ export default function Home() {
       hasAiSummary: false,
     },
     {
-      id: "c3",
+      id: "3",
       title: "اختبار RTL — تصميم احترافي لمكتبة البطاقات",
       url: "https://example.com/rtl",
       textPreview:
@@ -34,7 +34,7 @@ export default function Home() {
       hasAiSummary: true,
     },
     {
-      id: "d4",
+      id: "4",
       title: "Long title stress test — truncation should feel premium",
       url: "https://really-long-subdomain.example-company.co.uk/articles/123",
       textPreview:
