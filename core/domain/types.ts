@@ -1,5 +1,5 @@
 // step 1 we define types used across all the application
-
+import "next-auth";
 // first we define the summary formats available
 export type SummaryFormat = "paragraph" | "bullet_points" | "study_notes";
 // then we define the input type for creating a clip

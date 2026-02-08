@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_Arabic, Inter } from "next/font/google";
 import Topbar from "../components/Topbar";
-
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+import { requireUser } from "@/infra/auth/requireUser";
 const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
   weight: ["400", "600"],
@@ -19,11 +21,16 @@ export const metadata: Metadata = {
   description: "   Your Ultimate Learning Companion",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  if (!session?.user) {
+    redirect("/login");
+  }
+  const user = await requireUser();
   return (
     <html
       lang="en"
@@ -31,7 +38,7 @@ export default function RootLayout({
       className={`${ibmPlexSansArabic.variable} ${inter.variable}`}
     >
       <body className="antialiased">
-        <Topbar />
+        <Topbar user={{ ...user, name: user.name || "", image: user.image || "" }} />
         {children}
       </body>
     </html>

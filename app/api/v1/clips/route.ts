@@ -2,14 +2,13 @@
 import { NextRequest, NextResponse } from "next/server";
 // zod for schema validation zod is a TypeScript-first schema declaration and validation library.
 import { z } from "zod";
-// temporary dev auth to get a fixed userId
-import { getDevUserId } from "@/infra/auth/devauth";
 // prisma implementation of the clip repository interface with it we create objects containing methods to interact with the database. we pass this repo to the service layer.
 import { ClipRepoPrisma } from "@/infra/prisma/repos/cliprepo";
 // service layer that contains business logic related to clips. receives the repoprisma obect to perform database operations.
 import { ClipService } from "@/core/applicationlogique/services/clipservice";
 import { AppError } from "@/core/applicationlogique/errors";
 // specify that this route should run in the nodejs runtime environment (not edge) setings for better compatibility with certain nodejs packages and features.like prisma.
+import { requireUser } from "@/infra/auth/requireUser";
 export const runtime = "nodejs";
 // Zod schema to validate the body of the create clip request
 const CreateClipSchema = z.object({
@@ -27,7 +26,8 @@ const CreateClipSchema = z.object({
 export async function POST(req: NextRequest) {
   try {
     // 1) Auth (dev only) just for testing and development purposes
-    const userId = await getDevUserId();
+    const user = await requireUser();
+    const userId = user.id;
 
     // 3) Parse + Validate body (using Zod) here we validate the incoming request body against the CreateClipSchema defined above we transform the body to json and parse it using zod.
     // if the body does not conform to the schema, a ZodError will be thrown.
@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
     if (e instanceof AppError) {
       return NextResponse.json(
         { ok: false, code: e.code, message: e.message },
-        { status: e.status }
+        { status: e.status },
       );
     }
 
@@ -62,21 +62,22 @@ export async function POST(req: NextRequest) {
     if (e instanceof z.ZodError) {
       return NextResponse.json(
         { ok: false, code: "INVALID_BODY", issues: e.issues },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // unknown error
     return NextResponse.json(
       { ok: false, code: "INTERNAL_ERROR" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 ///// get user clips
 export async function GET() {
   try {
-    const userId = await getDevUserId();
+    const user = await requireUser();
+    const userId = user.id;
 
     const clipService = new ClipService(new ClipRepoPrisma());
     const data = await clipService.listUserClips(userId, 50);
@@ -86,12 +87,12 @@ export async function GET() {
     if (e instanceof AppError) {
       return NextResponse.json(
         { ok: false, code: e.code, message: e.message },
-        { status: e.status }
+        { status: e.status },
       );
     }
     return NextResponse.json(
       { ok: false, code: "INTERNAL_ERROR" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

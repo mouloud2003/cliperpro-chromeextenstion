@@ -1,9 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getDevUserId } from "@/infra/auth/devauth";
 import { PrismaSettingRepository } from "@/infra/prisma/repos/settingsrepo";
 import { SettingsService } from "@/core/applicationlogique/services/settingservice";
 import { z } from "zod";
 import { AppError } from "@/core/applicationlogique/errors";
+import { requireUser } from "@/infra/auth/requireUser";
 export const runtime = "nodejs";
 // Zod schema to validate the body of the update settings request
 const SummaryFormatSchema = z.enum([
@@ -23,35 +23,37 @@ const settingsService = makeSettingsService();
 
 export async function GET() {
   try {
-    const userId = await getDevUserId();
+    const user = await requireUser();
+    const userId = user.id;
     const settings = await settingsService.getUserSettings(userId);
     return NextResponse.json({ ok: true, settings }, { status: 200 });
   } catch (e: unknown) {
     if (e instanceof AppError) {
       return NextResponse.json(
         { ok: false, code: e.code, message: e.message },
-        { status: e.status }
+        { status: e.status },
       );
     }
     return NextResponse.json(
       { ok: false, code: "INTERNAL_ERROR" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 export async function PUT(request: NextRequest) {
   try {
-    const userId = await getDevUserId();
+    const user = await requireUser();
+    const userId = user.id;
     const body = await request.json();
     // Validate request body
     const parsedBody = UpdateSettingsSchema.parse(body);
     const updatedSettings = await settingsService.updateUserSettings(
       userId,
-      parsedBody
+      parsedBody,
     );
     return NextResponse.json(
       { ok: true, settings: updatedSettings },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (e) {
     // error handling
@@ -60,7 +62,7 @@ export async function PUT(request: NextRequest) {
     if (e instanceof AppError) {
       return NextResponse.json(
         { ok: false, code: e.code, message: e.message },
-        { status: e.status }
+        { status: e.status },
       );
     }
 
@@ -68,14 +70,14 @@ export async function PUT(request: NextRequest) {
     if (e instanceof z.ZodError) {
       return NextResponse.json(
         { ok: false, code: "INVALID_BODY", issues: e.issues },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // unknown error
     return NextResponse.json(
       { ok: false, code: "INTERNAL_ERROR" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

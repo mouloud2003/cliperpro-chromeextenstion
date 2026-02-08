@@ -3,7 +3,11 @@ import { Feather, Search, Settings } from "lucide-react";
 import Image from "next/image";
 import "./Topbar.css";
 
-export default function Topbar() {
+export default function Topbar({
+  user,
+}: {
+  user?: { name: string; image: string };
+}) {
   return (
     <div className="Topbar ">
       <div className="Topbar-left flex items-center gap-2">
@@ -33,7 +37,7 @@ export default function Topbar() {
         </button>
         <div className="w-9 h-9 rounded-full bg-indigo-100 border border-indigo-200 flex items-center justify-center overflow-hidden hover:border-indigo-300 transition-colors">
           <Image
-            src="/bllk _ bachira.jpeg"
+            src={user?.image ?? "/bllk _ bachira.jpeg"}
             alt="User"
             width={36}
             height={36}

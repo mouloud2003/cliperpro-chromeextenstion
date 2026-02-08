@@ -1,21 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-
-import { getDevUserId } from "@/infra/auth/devauth";
-
 import { ClipRepoPrisma } from "@/infra/prisma/repos/cliprepo";
 import { PrismaSettingRepository } from "@/infra/prisma/repos/settingsrepo";
 import { PrismaUsageRepository } from "@/infra/prisma/repos/usagerepo";
 import { PrismaSummaryRepository } from "@/infra/prisma/repos/summaryrepo";
-
 import { ClipService } from "@/core/applicationlogique/services/clipservice";
 import { SettingsService } from "@/core/applicationlogique/services/settingservice";
 import { UsageService } from "@/core/applicationlogique/services/usageservice";
 import { SummaryService } from "@/core/applicationlogique/services/summaryservice";
-
 import { GeminiAIClient } from "@/infra/ai/Gemini";
 import { AppError } from "@/core/applicationlogique/errors";
-
+import { requireUser } from "@/infra/auth/requireUser";
 export const runtime = "nodejs";
 
 // body schema
@@ -29,10 +24,11 @@ const BodySchema = z.object({
 });
 export async function POST(
   req: NextRequest,
-  ctx: { params: Promise<{ id: string }> }
+  ctx: { params: Promise<{ id: string }> },
 ) {
   try {
-    const userId = await getDevUserId();
+    const user = await requireUser();
+    const userId = user.id;
     const clipId = (await ctx.params).id;
 
     const body = await req.json();
@@ -54,12 +50,12 @@ export async function POST(
       settingsService,
       usageService,
       summaryRepo,
-      aiClient
+      aiClient,
     );
     const result = await summaryService.summarizeClip(
       userId,
       clipId,
-      parsed.format
+      parsed.format,
     );
 
     return NextResponse.json({ ok: true, summary: result }, { status: 200 });
@@ -67,20 +63,20 @@ export async function POST(
     if (e instanceof AppError) {
       return NextResponse.json(
         { ok: false, code: e.code, message: e.message },
-        { status: e.status }
+        { status: e.status },
       );
     }
 
     if (e instanceof z.ZodError) {
       return NextResponse.json(
         { ok: false, code: "INVALID_BODY", issues: e.issues },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     return NextResponse.json(
       { ok: false, code: "INTERNAL_ERROR" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

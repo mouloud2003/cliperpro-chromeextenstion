@@ -1,5 +1,4 @@
 import { NotionCard } from "../components/Clipcard";
-import Topbar from "../components/Topbar";
 import type { ClipDTO } from "../../core/domain/types";
 
 const NOW = Date.now();
