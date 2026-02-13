@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import ContentAiTabsPro from "@/app/components/ContentAiTabsPro";
@@ -33,8 +33,29 @@ export function ClipDetailView({ clip }: { clip: ClipDetailDTO }) {
     Partial<Record<SummaryFormat, SummaryDTO>>
   >({});
   const [loadingSummary, setLoadingSummary] = useState(false);
+  const [loadingExisting, setLoadingExisting] = useState(true);
+  const [activeTab, setActiveTab] = useState<"content" | "ai">("content");
   const { refreshUsage } = useUsage();
   const { aiEnabled } = useAiSettings();
+
+  // Load previously generated summaries on mount
+  useEffect(() => {
+    async function fetchExisting() {
+      try {
+        const res = await fetch(`/api/v1/clips/${clip.id}/summaries`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.summaries) {
+            setSummaries(data.summaries);
+          }
+        }
+      } catch {
+      } finally {
+        setLoadingExisting(false);
+      }
+    }
+    fetchExisting();
+  }, [clip.id]);
 
   const hasAnySummary = Boolean(
     summaries.paragraph || summaries.bullet_points || summaries.study_notes,
@@ -71,6 +92,8 @@ export function ClipDetailView({ clip }: { clip: ClipDetailDTO }) {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
       <ContentAiTabsPro
         defaultTab="content"
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
         sticky
         contentLabel="المحتوى"
         aiLabel="الذكاء"
@@ -82,6 +105,7 @@ export function ClipDetailView({ clip }: { clip: ClipDetailDTO }) {
         ai={
           <AiSummaryPanel
             isLoading={loadingSummary}
+            isLoadingExisting={loadingExisting}
             onStart={onStart}
             summaries={summaries}
             defaultFormat="paragraph"

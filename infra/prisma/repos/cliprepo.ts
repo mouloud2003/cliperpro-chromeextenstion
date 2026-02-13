@@ -14,7 +14,7 @@ import type {
 export class ClipRepoPrisma implements IClipRepository {
   async create(
     userId: string,
-    input: CreateClipInput
+    input: CreateClipInput,
   ): Promise<{ id: string }> {
     const clip = await prisma.clip.create({
       data: {
@@ -41,6 +41,7 @@ export class ClipRepoPrisma implements IClipRepository {
         url: true,
         text: true,
         createdAt: true,
+        _count: { select: { summaries: true } },
       },
     });
 
@@ -50,6 +51,7 @@ export class ClipRepoPrisma implements IClipRepository {
       url: r.url ?? undefined,
       textPreview: r.text.slice(0, 220),
       createdAt: r.createdAt.toISOString(),
+      hasAiSummary: r._count.summaries > 0,
     }));
   }
 

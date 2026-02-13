@@ -93,4 +93,50 @@ export class PrismaSummaryRepository implements IClipSummaryRepository {
       promptVersion: row.promptVersion,
     };
   }
+
+  async findAllByClipId(
+    clipId: string,
+    userId: string,
+  ): Promise<ClipSummaryRow[]> {
+    // Get the latest completed summary per format for this clip+user
+    const rows = await prisma.clipSummary.findMany({
+      where: {
+        clipId,
+        userId,
+        status: "completed",
+      },
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        clipId: true,
+        userId: true,
+        format: true,
+        summaryTitle: true,
+        summaryBody: true,
+        createdAt: true,
+        model: true,
+        promptVersion: true,
+      },
+    });
+
+    // Keep only the latest per format
+    const seen = new Set<string>();
+    const unique: ClipSummaryRow[] = [];
+    for (const r of rows) {
+      if (seen.has(r.format)) continue;
+      seen.add(r.format);
+      unique.push({
+        id: r.id,
+        clipId: r.clipId,
+        userId: r.userId,
+        format: r.format as SummaryFormat,
+        title: r.summaryTitle || undefined,
+        body: r.summaryBody,
+        createdAt: r.createdAt,
+        model: r.model,
+        promptVersion: r.promptVersion,
+      });
+    }
+    return unique;
+  }
 }

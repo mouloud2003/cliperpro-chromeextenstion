@@ -1,4 +1,8 @@
-import type { IAIClient, SummarizeInput, SummarizeOutput } from "@/core/ports/ai";
+import type {
+  IAIClient,
+  SummarizeInput,
+  SummarizeOutput,
+} from "@/core/ports/ai";
 import type {
   IClipRepository,
   IClipSummaryRepository,
@@ -39,7 +43,10 @@ export class FakeClipRepo implements IClipRepository {
     this.byId.set(clip.id, clip);
   }
 
-  async create(userId: string, input: { text: string; title?: string; url?: string }) {
+  async create(
+    userId: string,
+    input: { text: string; title?: string; url?: string },
+  ) {
     const id = `clip_${Math.random().toString(16).slice(2)}`;
     const row: ClipRow = {
       id,
@@ -94,10 +101,14 @@ export class FakeSettingsRepo implements IUserSettingsRepository {
   }
 
   async upsert(userId: string, input: Partial<UserSettingsDTO>) {
-    const cur = this.map.get(userId) ?? { aiEnabled: false, defaultSummaryFormat: "bullet_points" as SummaryFormat };
+    const cur = this.map.get(userId) ?? {
+      aiEnabled: false,
+      defaultSummaryFormat: "bullet_points" as SummaryFormat,
+    };
     const next: UserSettingsDTO = {
       aiEnabled: input.aiEnabled ?? cur.aiEnabled,
-      defaultSummaryFormat: input.defaultSummaryFormat ?? cur.defaultSummaryFormat,
+      defaultSummaryFormat:
+        input.defaultSummaryFormat ?? cur.defaultSummaryFormat,
     };
     this.map.set(userId, next);
     return next;
@@ -125,7 +136,10 @@ export class FakeUsageRepo implements IUsageRepository {
     return created;
   }
 
-  async tryConsumeSummary(userId: string, monthStart: Date): Promise<UsageRow | null> {
+  async tryConsumeSummary(
+    userId: string,
+    monthStart: Date,
+  ): Promise<UsageRow | null> {
     this.consumeCalls++;
     const row = await this.getOrCreateMonth(userId, monthStart);
     if (row.summaryCount >= row.limit) return null;
@@ -151,7 +165,16 @@ type SummaryRow = {
 export class FakeSummaryRepo implements IClipSummaryRepository {
   private rows: SummaryRow[] = [];
 
-  seedCached(row: { userId: string; clipId: string; format: SummaryFormat; inputHash: string; title?: string; body: string; model?: string; promptVersion?: number }) {
+  seedCached(row: {
+    userId: string;
+    clipId: string;
+    format: SummaryFormat;
+    inputHash: string;
+    title?: string;
+    body: string;
+    model?: string;
+    promptVersion?: number;
+  }) {
     this.rows.push({
       id: `summary_${Math.random().toString(16).slice(2)}`,
       userId: row.userId,
@@ -166,9 +189,37 @@ export class FakeSummaryRepo implements IClipSummaryRepository {
     });
   }
 
-  async findLatestByClipAndFormat(q: { userId: string; clipId: string; format: SummaryFormat; inputHash: string }) {
+  async findAllByClipId(clipId: string, userId: string) {
+    return this.rows
+      .filter((r) => r.clipId === clipId && r.userId === userId)
+      .map((r) => ({
+        id: r.id,
+        userId: r.userId,
+        clipId: r.clipId,
+        format: r.format,
+        model: r.model,
+        promptVersion: r.promptVersion,
+        inputHash: r.inputHash,
+        title: r.title ?? undefined,
+        body: r.body,
+        createdAt: r.createdAt,
+      }));
+  }
+
+  async findLatestByClipAndFormat(q: {
+    userId: string;
+    clipId: string;
+    format: SummaryFormat;
+    inputHash: string;
+  }) {
     const hit = [...this.rows]
-      .filter((r) => r.userId === q.userId && r.clipId === q.clipId && r.format === q.format && r.inputHash === q.inputHash)
+      .filter(
+        (r) =>
+          r.userId === q.userId &&
+          r.clipId === q.clipId &&
+          r.format === q.format &&
+          r.inputHash === q.inputHash,
+      )
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0];
 
     if (!hit) return null;
@@ -187,7 +238,16 @@ export class FakeSummaryRepo implements IClipSummaryRepository {
     };
   }
 
-  async create(input: { userId: string; clipId: string; format: SummaryFormat; inputHash: string; title?: string; body: string; model: string; promptVersion: number }) {
+  async create(input: {
+    userId: string;
+    clipId: string;
+    format: SummaryFormat;
+    inputHash: string;
+    title?: string;
+    body: string;
+    model: string;
+    promptVersion: number;
+  }) {
     const row: SummaryRow = {
       id: `summary_${Math.random().toString(16).slice(2)}`,
       userId: input.userId,

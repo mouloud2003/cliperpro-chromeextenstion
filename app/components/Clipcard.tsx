@@ -74,28 +74,37 @@ export function NotionCard({ clip, q }: { clip: ClipDTO; q: string }) {
   const rel = formatRelative(clip.createdAt);
   const words = wordCount(clip.textPreview);
   const mins = readingTimeMin(words);
+  const hasSummary = clip.hasAiSummary === true;
 
   return (
     <Link
       href={`/library/${clip.id}`}
       aria-label={`Open clip: ${clip.title ?? "Untitled clip"}`}
-      className="block h-full outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 dark:focus-visible:ring-offset-slate-950 rounded-xl"
+      className="group/card block h-full outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 dark:focus-visible:ring-offset-slate-950 rounded-xl"
     >
       <article
         dir="rtl"
         className={[
-          "h-full min-h-[180px] rounded-xl border p-5 flex flex-col",
+          "relative h-full min-h-[180px] rounded-xl border p-5 flex flex-col overflow-hidden",
           "bg-white dark:bg-slate-900",
-          "border-slate-200 dark:border-slate-800",
-          "shadow-none",
-          "transition duration-150 will-change-transform",
-          // Notion-like hover: subtle, calm
-          "hover:bg-slate-50/60 dark:hover:bg-slate-900/60",
+          hasSummary
+            ? "border-amber-200/60 dark:border-amber-700/30"
+            : "border-slate-200 dark:border-slate-800",
+          "transition-all duration-200 will-change-transform",
           "hover:-translate-y-[2px]",
-          "hover:border-indigo-500",
-          "hover:shadow-[0_4px_12px_rgba(99,102,241,0.10)]",
+          hasSummary
+            ? "hover:border-amber-400/80 hover:shadow-[0_6px_20px_rgba(245,158,11,0.10)]"
+            : "hover:border-indigo-500 hover:shadow-[0_4px_12px_rgba(99,102,241,0.10)]",
         ].join(" ")}
       >
+        {/* Subtle AI glow accent — top-right corner */}
+        {hasSummary && (
+          <div
+            className="pointer-events-none absolute -top-8 -right-8 h-24 w-24 rounded-full opacity-[0.07] blur-2xl bg-amber-400 transition-opacity duration-300 group-hover/card:opacity-[0.13]"
+            aria-hidden="true"
+          />
+        )}
+
         {/* Top */}
         <div className="flex items-start justify-between gap-3 text-right">
           <span className="max-w-[60%] truncate rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/40 px-2 py-1 text-xs text-slate-600 dark:text-slate-300">
@@ -124,17 +133,45 @@ export function NotionCard({ clip, q }: { clip: ClipDTO; q: string }) {
 
         {/* Bottom */}
         <div className="mt-4 flex items-center justify-between gap-2 text-xs">
-          <span
-            className={
-              clip.hasAiSummary
-                ? "text-amber-600 dark:text-amber-500 font-semibold"
-                : "text-slate-400 dark:text-slate-500 font-semibold"
-            }
-          >
-            {clip.hasAiSummary ? "AI Summary" : "—"}
-          </span>
+          {hasSummary ? (
+            <span className="inline-flex items-center gap-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/40 px-2.5 py-1 transition-colors duration-200 group-hover/card:bg-amber-100/80 dark:group-hover/card:bg-amber-950/60">
+              <svg
+                className="h-3.5 w-3.5 text-amber-500"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+                <path d="M20 3v4" />
+                <path d="M22 5h-4" />
+              </svg>
+              <span className="text-[11px] font-semibold text-amber-700 dark:text-amber-400">
+                ملخّص AI
+              </span>
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1 text-slate-400 dark:text-slate-500">
+              <svg
+                className="h-3 w-3"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              <span className="text-[11px] font-medium">بدون ملخص</span>
+            </span>
+          )}
 
-          <span className="text-slate-500 dark:text-slate-400">
+          <span dir="ltr" className="text-slate-500 dark:text-slate-400">
             {mins} min • {words} words
           </span>
         </div>

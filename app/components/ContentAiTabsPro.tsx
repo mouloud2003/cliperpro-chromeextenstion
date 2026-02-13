@@ -9,6 +9,8 @@ export default function ContentAiTabsPro({
   content,
   ai,
   defaultTab = "content",
+  activeTab,
+  onTabChange,
   sticky = true,
   contentBadge,
   aiBadge,
@@ -18,13 +20,20 @@ export default function ContentAiTabsPro({
   content: React.ReactNode;
   ai: React.ReactNode;
   defaultTab?: TabKey;
+  activeTab?: TabKey;
+  onTabChange?: (tab: TabKey) => void;
   sticky?: boolean;
   contentBadge?: string;
   aiBadge?: string;
   contentLabel?: string;
   aiLabel?: string;
 }) {
-  const [tab, setTab] = useState<TabKey>(defaultTab);
+  const [internalTab, setInternalTab] = useState<TabKey>(defaultTab);
+  const tab = activeTab ?? internalTab;
+  const setTab = (t: TabKey) => {
+    setInternalTab(t);
+    onTabChange?.(t);
+  };
 
   const tabs = useMemo(
     () => [

@@ -34,6 +34,9 @@ export interface IClipSummaryRepository {
     inputHash: string;
   }): Promise<ClipSummaryRow | null>;
 
+  // find all completed summaries for a clip (one per format, latest)
+  findAllByClipId(clipId: string, userId: string): Promise<ClipSummaryRow[]>;
+
   // create a new summary for a clip
   create(params: {
     clipId: string;
@@ -55,7 +58,7 @@ export interface IUserSettingsRepository {
   // upsert: if not present, create; if present, update
   upsert(
     userId: string,
-    input: Partial<UserSettingsDTO> // partial means not all fields are required which means we can update only some fields
+    input: Partial<UserSettingsDTO>, // partial means not all fields are required which means we can update only some fields
   ): Promise<UserSettingsDTO>;
 }
 
