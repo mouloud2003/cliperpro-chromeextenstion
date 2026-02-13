@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import { toast } from "react-toastify";
 import {
   DocumentTextIcon,
   ListBulletIcon,
@@ -63,7 +64,10 @@ export default function AiSummaryPanel({
     if (!activeSummary?.body) return;
     try {
       await navigator.clipboard.writeText(activeSummary.body);
-    } catch {}
+      toast.success("تم نسخ الملخص بنجاح!");
+    } catch {
+      toast.error("حدث خطأ أثناء النسخ.");
+    }
   };
 
   const hasResult = Boolean(activeSummary?.body?.trim());
@@ -186,25 +190,10 @@ export default function AiSummaryPanel({
                     <button
                       type="button"
                       onClick={copy}
-                      className="h-10 w-10 rounded-xl border border-slate-200 hover:bg-slate-50 flex items-center justify-center"
+                      className="h-10 w-10 rounded-xl border cursor-pointer border-slate-200 hover:bg-slate-50 flex items-center justify-center"
                       title="نسخ"
                     >
                       <ClipboardIcon className="w-5 h-5 text-slate-600" />
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => onStart?.(format)}
-                      disabled={!onStart || isLoading}
-                      className={[
-                        "h-10 px-4 rounded-xl text-sm font-semibold",
-                        "border border-slate-200 hover:bg-slate-50",
-                        !onStart || isLoading
-                          ? "opacity-60 cursor-not-allowed"
-                          : "",
-                      ].join(" ")}
-                    >
-                      {isLoading ? "..." : "تحديث"}
                     </button>
                   </div>
                 </div>
