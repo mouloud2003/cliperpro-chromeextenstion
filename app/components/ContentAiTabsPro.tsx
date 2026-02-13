@@ -91,10 +91,10 @@ export default function ContentAiTabsPro({
         onKeyDown={onKeyDown}
         className={[
           "relative w-full",
-          sticky ? "sticky top-0 z-30" : "",
-          "bg-white/70 backdrop-blur-xl",
-          "supports-[backdrop-filter]:bg-white/55",
-          "border-b border-slate-200/50",
+          sticky ? "sticky top-[60px] z-30" : "",
+          "bg-white/80 backdrop-blur-xl",
+          "supports-[backdrop-filter]:bg-white/65",
+          "border-b border-slate-200/40",
           "pb-3 pt-2",
         ].join(" ")}
       >
