@@ -432,17 +432,17 @@ export default function Topbar({
           className="Topbar-left flex items-center gap-3 group"
         >
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-sm shadow-indigo-200/50 group-hover:shadow-md group-hover:shadow-indigo-200/60 transition-all duration-300">
+            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary shadow-sm transition-all duration-300 group-hover:shadow-md">
               <Feather size={16} className="text-white" />
             </div>
-            <span className="font-bold text-[17px] text-slate-800 tracking-tight">
-              Cliper <span className="text-indigo-600">Pro</span>
+            <span className="text-[17px] font-semibold tracking-tight text-foreground">
+              Cliper <span className="text-primary">Pro</span>
             </span>
           </div>
         </Link>
         <div className="Topbar-middle" dir="rtl">
           <div className="relative w-full">
-            <Search className="w-4 h-4 text-slate-400 absolute start-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
               placeholder="بحث في المكتبة..."
@@ -460,10 +460,10 @@ export default function Topbar({
               ref={settingsBtnRef}
               onClick={() => setSettingsOpen((v) => !v)}
               className={[
-                "w-9 h-9 rounded-xl border flex items-center justify-center transition-all duration-200",
+                "flex h-9 w-9 items-center justify-center rounded-md border transition-all duration-200",
                 settingsOpen
-                  ? "bg-indigo-50 text-indigo-500 border-indigo-200 shadow-sm"
-                  : "bg-white/80 border-slate-200/80 text-slate-500 hover:bg-indigo-50 hover:text-indigo-500 hover:border-indigo-200 hover:shadow-sm",
+                  ? "border-primary/30 bg-primary/10 text-primary shadow-sm"
+                  : "border-border bg-card/80 text-muted-foreground hover:border-primary/30 hover:bg-primary/10 hover:text-primary hover:shadow-sm",
               ].join(" ")}
               title="Settings"
             >
@@ -483,7 +483,7 @@ export default function Topbar({
 
           <Link
             href="/library/profile"
-            className="w-9 h-9 rounded-xl overflow-hidden ring-2 ring-slate-100 hover:ring-indigo-200 transition-all duration-200"
+            className="h-9 w-9 overflow-hidden rounded-full ring-2 ring-border transition-all duration-200 hover:ring-primary/30"
           >
             <Image
               src={user?.image || "/default-avatar.png"}

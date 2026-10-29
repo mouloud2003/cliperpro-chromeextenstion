@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans_Arabic, Inter } from "next/font/google";
+import { Fraunces, IBM_Plex_Sans_Arabic, Inter, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -16,6 +16,20 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-fraunces",
+  display: "swap",
+});
+
+const sourceSans = Source_Sans_3({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-source-sans",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Clipper Pro ",
   description: "   Your Ultimate Learning Companion",
@@ -30,9 +44,10 @@ export default function RootLayout({
     <html
       lang="en"
       dir="ltr"
-      className={`${ibmPlexSansArabic.variable} ${inter.variable}`}
+      className={`${ibmPlexSansArabic.variable} ${inter.variable} ${fraunces.variable} ${sourceSans.variable}`}
+      suppressHydrationWarning
     >
-      <body className="antialiased">
+      <body className={`${inter.className} antialiased`}>
         {children}
         <ToastContainer
           position="top-center"

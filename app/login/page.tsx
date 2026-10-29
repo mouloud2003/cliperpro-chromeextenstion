@@ -13,7 +13,7 @@ import { Sparkles } from "lucide-react";
 
 export default function LoginPage() {
   return (
-    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 px-6 py-12">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-6 py-12">
       {/* Animated gradient orbs */}
       <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 animate-pulse rounded-full bg-gradient-to-br from-primary/20 to-purple-500/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 animate-pulse rounded-full bg-gradient-to-tl from-secondary/20 to-blue-500/10 blur-3xl" />
@@ -22,15 +22,15 @@ export default function LoginPage() {
       {/* Grid pattern overlay */}
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.1)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.1)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 
-      <Card className="relative w-full max-w-md overflow-hidden border-border/40 bg-card/60 shadow-2xl shadow-primary/5 backdrop-blur-xl">
+      <Card className="relative w-full max-w-md overflow-hidden border-border/70 bg-card shadow-[0_24px_60px_-35px_rgba(26,26,26,0.35)]">
         {/* Card glow effect */}
         <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
 
         <CardHeader className="relative text-center pb-2">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/25">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
             <Sparkles className="h-8 w-8" />
           </div>
-          <CardTitle className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-3xl font-bold tracking-tight">
+          <CardTitle className="text-3xl font-semibold tracking-tight text-foreground">
             Welcome to CliperPro
           </CardTitle>
           <CardDescription className="text-base text-muted-foreground/80">
@@ -47,7 +47,7 @@ export default function LoginPage() {
           >
             <Button
               type="submit"
-              className="w-full h-12 text-base font-medium bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:scale-[1.02]"
+              className="h-12 w-full rounded-md bg-primary text-base font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
             >
               <svg className="mr-2 h-5 w-5" viewBox="0 0 24 24">
                 <path

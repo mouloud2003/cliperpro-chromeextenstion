@@ -1,516 +1,204 @@
 import Link from "next/link";
 import {
-  Sparkles,
-  Bookmark,
-  FolderOpen,
-  Brain,
-  Shield,
-  Zap,
-  BarChart3,
+  ArrowDownRight,
   ArrowRight,
+  BookOpen,
+  Check,
   ChevronDown,
-  ChevronRight,
-  Layers,
-  Clock,
-  Eye,
+  CircleHelp,
   FileText,
+  Folder,
+  Highlighter,
+  LockKeyhole,
+  MousePointer2,
+  Sparkles,
 } from "lucide-react";
 
-/* ────────────────────────────────────────────
-   Clipper Pro — Public Landing Page
-   ──────────────────────────────────────────── */
+const features = [
+  {
+    icon: Highlighter,
+    title: "Clip the useful part",
+    text: "Save a paragraph, passage, or idea from any page without leaving your reading flow.",
+    color: "bg-[#d9ff65]",
+  },
+  {
+    icon: Folder,
+    title: "Build a personal library",
+    text: "Keep source, date, and context together so your saved reading stays findable.",
+    color: "bg-[#8fe4d2]",
+  },
+  {
+    icon: Sparkles,
+    title: "Summarize on request",
+    text: "Ask for bullets, a paragraph, or study notes only when you want a shorter version.",
+    color: "bg-[#ff927b]",
+  },
+];
+
+const faqs = [
+  ["What is Clipper Pro?", "Clipper Pro is a learning companion for saving web text, organizing it in a personal library, and creating AI summaries on request."],
+  ["Does AI summarize my clips automatically?", "No. Your clips stay as captured until you choose a format and click the summarize action."],
+  ["What summary formats are available?", "You can request bullet points, a paragraph, or study notes depending on how you want to review the clip."],
+  ["How do usage limits work?", "AI summaries count toward a monthly usage limit. Your saved clips and existing summaries remain available when you reach it."],
+];
+
+function GoogleMark() {
+  return (
+    <span aria-hidden="true" className="grid h-5 w-5 place-items-center rounded-full bg-white text-[11px] font-bold text-[#3c4043]">
+      G
+    </span>
+  );
+}
+
+function ClipWalkthrough() {
+  return (
+    <div className="relative mx-auto w-full max-w-[620px] lg:ml-auto">
+      <div className="absolute -left-4 top-8 hidden h-24 w-24 rounded-full bg-[#ff927b] blur-3xl sm:block" />
+      <div className="relative grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
+        <div className="clip-source rotate-[-2deg] border-2 border-[#101820] bg-[#fffaf0] p-5 shadow-[8px_8px_0_#101820]">
+          <div className="mb-5 flex items-center justify-between border-b border-[#101820]/15 pb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#50605f]">
+            <span>Reading tab</span>
+            <span className="h-2 w-2 rounded-full bg-[#ff6b4a]" />
+          </div>
+          <p className="text-sm font-bold text-[#101820]">The value of a good research question</p>
+          <p className="mt-4 text-[13px] leading-6 text-[#50605f]">
+            A useful question gives a project direction. It narrows the field without closing off curiosity.
+          </p>
+          <div className="mt-4 inline-flex items-center gap-2 rounded bg-[#d9ff65] px-2 py-1 text-[11px] font-bold text-[#101820]">
+            <MousePointer2 className="h-3 w-3" /> Select to clip
+          </div>
+        </div>
+
+        <ArrowRight className="flow-arrow mx-auto hidden h-7 w-7 text-[#ff6b4a] sm:block" />
+        <ArrowDownRight className="flow-arrow mx-auto h-7 w-7 text-[#ff6b4a] sm:hidden" />
+
+        <div className="clip-summary rotate-[2deg] border-2 border-[#101820] bg-[#101820] p-5 text-[#fffaf0] shadow-[8px_8px_0_#ff6b4a]">
+          <div className="mb-5 flex items-center justify-between border-b border-white/15 pb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#b8c2bd]">
+            <span>Saved clip</span>
+            <span className="rounded-full bg-[#d9ff65] px-2 py-0.5 text-[9px] text-[#101820]">Library</span>
+          </div>
+          <p className="text-sm font-bold">Research questions give a project direction.</p>
+          <div className="mt-5 border-t border-white/15 pt-4">
+            <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.14em] text-[#b8c2bd]">
+              <span>Summary</span><span className="text-[#d9ff65]">Bullets</span>
+            </div>
+            <ul className="mt-3 space-y-2 text-[12px] leading-5 text-[#fffaf0]">
+              <li className="flex gap-2"><span className="text-[#ff927b]">—</span> Gives a project direction</li>
+              <li className="flex gap-2"><span className="text-[#ff927b]">—</span> Narrows the field</li>
+              <li className="flex gap-2"><span className="text-[#ff927b]">—</span> Keeps curiosity open</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p className="mt-7 text-center text-xs font-bold uppercase tracking-[0.16em] text-[#50605f]">clip → keep → ask for a summary</p>
+    </div>
+  );
+}
 
 export default function LandingPage() {
   return (
-    <>
-      {/* ═══════════════ HERO ═══════════════ */}
-      <section className="relative overflow-hidden px-6 pb-28 pt-20 md:pb-36 md:pt-28 lg:px-8">
-        {/* Single subtle ambient wash */}
-        <div className="pointer-events-none absolute left-1/2 top-0 h-[520px] w-[720px] -translate-x-1/2 rounded-full bg-violet-600/[0.045] blur-[140px]" />
-
-        <div className="relative mx-auto max-w-7xl">
-          <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
-            {/* ── Copy ── */}
-            <div className="max-w-xl">
-              <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-violet-500/15 bg-violet-500/[0.06] px-4 py-1.5 text-[13px] font-medium text-violet-300/80">
-                <Sparkles className="h-3 w-3" />
-                Chrome Extension for learners
-              </div>
-
-              <h1 className="text-[2.75rem] font-extrabold leading-[1.1] tracking-tight text-white/95 md:text-[3.5rem] lg:text-[4rem]">
-                Turn web reading
+    <div className="bg-[#f4efe6] text-[#101820]">
+      <section className="relative overflow-hidden border-b-2 border-[#101820]">
+        <div className="mx-auto max-w-7xl px-6 pb-16 pt-14 sm:px-8 lg:px-12 lg:pb-20 lg:pt-20">
+          <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+            <div>
+              <p className="mb-6 text-xs font-bold uppercase tracking-[0.2em] text-[#e55436]">A sharper way to study the web</p>
+              <h1 className="max-w-xl text-[3.4rem] font-black leading-[0.95] tracking-[-0.06em] sm:text-6xl lg:text-[5.8rem]">
+                Keep what
                 <br />
-                into{" "}
-                <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-violet-400 bg-clip-text text-transparent">
-                  ready-to-use
-                  <br className="hidden sm:block" /> knowledge.
-                </span>
+                <span className="text-[#e55436]">matters.</span>
               </h1>
-
-              <p className="mt-6 max-w-lg text-base leading-relaxed text-white/50 md:text-lg md:leading-relaxed">
-                Save any text from the web, organize it in your personal
-                library, and let AI create summaries in the format you learn
-                best.
+              <p className="mt-7 max-w-lg text-lg leading-8 text-[#50605f]">
+                Clipper Pro turns scattered web reading into a personal library of useful clips — with AI summaries when you choose to ask.
               </p>
-
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:gap-4">
-                <Link
-                  href="/login"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-violet-600 px-7 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b12]"
-                >
-                  Get started free
-                  <ArrowRight className="h-3.5 w-3.5" />
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <Link href="/login" className="inline-flex min-h-12 items-center justify-center gap-3 border-2 border-[#101820] bg-[#101820] px-6 text-sm font-bold text-[#fffaf0] shadow-[4px_4px_0_#ff6b4a] transition-transform hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#ff6b4a] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#e55436]/40">
+                  <GoogleMark /> Sign in with Google
                 </Link>
-                <a
-                  href="#how-it-works"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-7 py-3 text-sm font-medium text-white/60 transition-all duration-200 hover:border-white/[0.12] hover:bg-white/[0.06] hover:text-white/80"
-                >
-                  See how it works
+                <a href="#how-it-works" className="inline-flex min-h-12 items-center justify-center gap-2 border-2 border-[#101820] px-6 text-sm font-bold transition-colors hover:bg-[#d9ff65] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#e55436]/40">
+                  See the workflow <ArrowDownRight className="h-4 w-4" />
                 </a>
               </div>
-
-              <p className="mt-8 flex items-center gap-2 text-[13px] text-white/30">
-                <Shield className="h-3.5 w-3.5 text-violet-400/50" />
-                AI runs only when you click Summarize.
-              </p>
+              <p className="mt-5 flex items-center gap-2 text-xs font-bold text-[#50605f]"><LockKeyhole className="h-4 w-4 text-[#e55436]" /> AI is explicit. Nothing is summarized without your click.</p>
             </div>
+            <ClipWalkthrough />
+          </div>
+        </div>
+        <div className="pointer-events-none absolute -bottom-16 -right-8 hidden h-44 w-44 rounded-full border-[18px] border-[#d9ff65] lg:block" />
+      </section>
 
-            {/* ── Mock UI cards ── */}
-            <div className="relative hidden lg:block">
-              <div className="relative h-[420px] w-full">
-                {/* Gentle glow behind cards */}
-                <div className="pointer-events-none absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/[0.05] blur-[100px]" />
-
-                {/* Card 1 — Saved Clip */}
-                <div className="absolute left-0 top-10 w-[250px] -rotate-3 rounded-xl border border-white/[0.06] bg-[#12121c]/90 p-5 shadow-xl shadow-black/20 backdrop-blur-sm transition-transform duration-500 ease-out hover:rotate-0 hover:scale-[1.03]">
-                  <div className="mb-3 flex items-center gap-2 text-xs font-medium text-white/35">
-                    <Bookmark className="h-3 w-3 text-violet-400/70" />
-                    Saved Clip
-                  </div>
-                  <p className="text-[13px] font-medium leading-snug text-white/80">
-                    &ldquo;Understanding React Server Components and how they
-                    change data fetching&hellip;&rdquo;
-                  </p>
-                  <div className="mt-4 flex items-center gap-2 text-[11px] text-white/25">
-                    <span className="rounded bg-white/[0.05] px-1.5 py-0.5">
-                      medium.com
-                    </span>
-                    <span>&middot;</span>
-                    <span>2 min read</span>
-                  </div>
-                </div>
-
-                {/* Card 2 — AI Summary (front center) */}
-                <div className="absolute left-1/2 top-0 z-10 w-[280px] -translate-x-1/2 rounded-xl border border-white/[0.06] bg-[#12121c]/90 p-5 shadow-xl shadow-black/20 backdrop-blur-sm">
-                  <div className="mb-3 flex items-center gap-2 text-xs font-medium text-white/35">
-                    <Sparkles className="h-3 w-3 text-violet-400/70" />
-                    AI Summary
-                  </div>
-                  <div className="mb-4 flex gap-1.5">
-                    <span className="rounded-md bg-violet-500/15 px-2.5 py-1 text-[11px] font-medium text-violet-300/80">
-                      Bullets
-                    </span>
-                    <span className="rounded-md bg-white/[0.04] px-2.5 py-1 text-[11px] text-white/30">
-                      Paragraph
-                    </span>
-                    <span className="rounded-md bg-white/[0.04] px-2.5 py-1 text-[11px] text-white/30">
-                      Q&amp;A
-                    </span>
-                  </div>
-                  <div className="space-y-2.5">
-                    {[
-                      "Server Components render on the server with zero client JS bundle",
-                      "Direct database access without API endpoints",
-                      "Automatic code splitting per component",
-                    ].map((text, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <div className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-violet-400/60" />
-                        <p className="text-[13px] leading-snug text-white/50">
-                          {text}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Card 3 — Usage */}
-                <div className="absolute right-0 top-14 w-[230px] rotate-2 rounded-xl border border-white/[0.06] bg-[#12121c]/90 p-5 shadow-xl shadow-black/20 backdrop-blur-sm transition-transform duration-500 ease-out hover:rotate-0 hover:scale-[1.03]">
-                  <div className="mb-3 flex items-center gap-2 text-xs font-medium text-white/35">
-                    <BarChart3 className="h-3 w-3 text-violet-400/70" />
-                    Monthly Usage
-                  </div>
-                  <p className="text-2xl font-bold text-white/85">
-                    12{" "}
-                    <span className="text-sm font-normal text-white/30">
-                      / 30
-                    </span>
-                  </p>
-                  <p className="mt-1 text-[11px] text-white/30">
-                    summaries this month
-                  </p>
-                  <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/[0.05]">
-                    <div className="h-full w-[40%] rounded-full bg-violet-500/60" />
-                  </div>
-                  <p className="mt-2 text-[11px] text-white/20">Resets Mar 1</p>
-                </div>
-              </div>
+      <section id="features" data-reveal className="border-b-2 border-[#101820] bg-[#fffaf0]">
+        <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8 lg:px-12 lg:py-20">
+          <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#e55436]">The essentials</p>
+              <h2 className="mt-4 max-w-sm text-4xl font-black leading-[1.05] tracking-[-0.04em] sm:text-5xl">Less sorting. More learning.</h2>
+            </div>
+            <div className="grid gap-0 border-t-2 border-[#101820] sm:grid-cols-3 sm:border-l-2 sm:border-t-0">
+              {features.map(({ icon: Icon, title, text, color }) => (
+                <article key={title} data-reveal className="border-b-2 border-[#101820] py-6 sm:border-b-0 sm:border-r-2 sm:px-7 first:sm:pl-7 last:border-r-0">
+                  <div className={`grid h-11 w-11 place-items-center border-2 border-[#101820] ${color}`}><Icon className="h-5 w-5" /></div>
+                  <h3 className="mt-6 text-lg font-black">{title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-[#50605f]">{text}</p>
+                </article>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════ SOCIAL PROOF ═══════════════ */}
-      <section className="border-y border-white/[0.05] px-6 py-14 lg:px-8">
-        <div className="mx-auto max-w-4xl">
-          <div className="grid gap-8 sm:grid-cols-3">
+      <section id="how-it-works" data-reveal className="border-b-2 border-[#101820] bg-[#d9ff65]">
+        <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8 lg:px-12 lg:py-20">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div><p className="text-xs font-bold uppercase tracking-[0.2em] text-[#e55436]">Your reading loop</p><h2 className="mt-4 max-w-2xl text-4xl font-black leading-[1.05] tracking-[-0.04em] sm:text-5xl">Capture once. Return smarter.</h2></div>
+            <ArrowDownRight className="hidden h-14 w-14 text-[#e55436] md:block" />
+          </div>
+          <div className="mt-10 grid gap-0 border-2 border-[#101820] md:grid-cols-3">
             {[
-              { value: "2,400+", label: "clips saved this month" },
-              { value: "890+", label: "AI summaries generated" },
-              { value: "4.9/5", label: "average user rating" },
-            ].map((stat, i) => (
-              <div key={i} className="text-center">
-                <p className="text-2xl font-bold tracking-tight text-white/85 md:text-3xl">
-                  {stat.value}
-                </p>
-                <p className="mt-1 text-[13px] text-white/35">{stat.label}</p>
+              ["01", "Highlight", "Select the sentence or passage worth keeping while you browse."],
+              ["02", "Organize", "Find every clip in one personal library with its source attached."],
+              ["03", "Study", "Choose bullets, a paragraph, or study notes when you need them."],
+            ].map(([number, title, text], index) => (
+              <div key={number} data-reveal className={`p-6 ${index < 2 ? "border-b-2 md:border-b-0 md:border-r-2" : ""} border-[#101820]`}>
+                <span className="text-sm font-black text-[#e55436]">{number}</span><h3 className="mt-12 text-2xl font-black">{title}</h3><p className="mt-3 max-w-xs text-sm leading-6 text-[#354341]">{text}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══════════════ PROBLEM → SOLUTION ═══════════════ */}
-      <section className="px-6 py-24 md:py-32 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-2xl font-bold tracking-tight text-white/90 md:text-3xl lg:text-4xl">
-              Sound familiar?
-            </h2>
-            <p className="mt-4 text-base text-white/40 md:text-lg">
-              The web is full of great content. The problem is what happens
-              after you read it.
-            </p>
-          </div>
-
-          {/* Problems */}
-          <div className="mt-14 grid gap-4 md:grid-cols-3 md:gap-5">
-            {(
-              [
-                {
-                  icon: Layers,
-                  title: "Too many tabs",
-                  desc: "You bookmark everything but never go back. Hundreds of tabs collecting dust.",
-                },
-                {
-                  icon: FileText,
-                  title: "Notes everywhere",
-                  desc: "Scattered across apps, docs, and sticky notes. Nothing connects.",
-                },
-                {
-                  icon: Clock,
-                  title: "Re-reading the same things",
-                  desc: "You forget what you read and waste time re-reading articles from scratch.",
-                },
-              ] as const
-            ).map((item, i) => (
-              <div
-                key={i}
-                className="rounded-xl border border-white/[0.05] bg-white/[0.02] p-6"
-              >
-                <item.icon className="h-5 w-5 text-white/25" />
-                <h3 className="mt-4 text-[15px] font-semibold text-white/75">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-white/35">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* Transition arrow */}
-          <div className="my-10 flex justify-center">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-violet-500/15 bg-violet-500/[0.06]">
-              <ChevronDown className="h-4 w-4 text-violet-400/60" />
-            </div>
-          </div>
-
-          {/* Solution flow */}
-          <div className="mx-auto max-w-2xl">
-            <div className="rounded-xl border border-violet-500/10 bg-violet-500/[0.025] px-6 py-8 text-center md:px-10">
-              <h3 className="text-lg font-semibold text-white/85">
-                The Clipper Pro way
-              </h3>
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5 text-[13px] font-medium">
-                {["Clip", "Library", "Summarize", "Study"].map((step, i) => (
-                  <span key={step} className="flex items-center gap-2.5">
-                    {i > 0 && <ArrowRight className="h-3 w-3 text-white/15" />}
-                    <span className="rounded-full bg-violet-500/15 px-3.5 py-1.5 text-violet-300/80">
-                      {step}
-                    </span>
-                  </span>
-                ))}
-              </div>
-              <p className="mt-5 text-[13px] text-white/35">
-                One flow. No context switching. Everything in one place.
-              </p>
-            </div>
+      <section id="privacy" data-reveal className="border-b-2 border-[#101820] bg-[#101820] text-[#fffaf0]">
+        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-14 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-12 lg:py-20">
+          <div><p className="text-xs font-bold uppercase tracking-[0.2em] text-[#ff927b]">Control is a feature</p><h2 className="mt-4 max-w-md text-4xl font-black leading-[1.05] tracking-[-0.04em] sm:text-5xl">Your library is yours.</h2><p className="mt-6 max-w-md text-base leading-7 text-[#b8c2bd]">Clip first. Decide later. Your reading stays organized without an automatic AI pass.</p></div>
+          <div className="grid gap-0 border-t border-white/25 sm:grid-cols-2 sm:border-l sm:border-t-0">
+            {[["AI on your terms", "Summaries happen only after you choose a clip and request a format.", Sparkles], ["Clear monthly limits", "See how much AI usage remains before you ask for the next summary.", CircleHelp], ["Sources stay attached", "Every saved clip keeps the page it came from close at hand.", FileText], ["Made for review", "Turn dense reading into bullets, paragraphs, or study notes.", BookOpen]].map(([title, text, Icon]) => {
+              const FeatureIcon = Icon as typeof Sparkles;
+              return <div key={title as string} className="border-b border-white/25 p-6 sm:border-r last:border-b-0"><FeatureIcon className="h-5 w-5 text-[#d9ff65]" /><h3 className="mt-6 font-black">{title as string}</h3><p className="mt-2 text-sm leading-6 text-[#b8c2bd]">{text as string}</p></div>;
+            })}
           </div>
         </div>
       </section>
 
-      {/* ═══════════════ FEATURES ═══════════════ */}
-      <section
-        id="features"
-        className="border-t border-white/[0.05] px-6 py-24 md:py-32 lg:px-8"
-      >
-        <div className="mx-auto max-w-7xl">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-2xl font-bold tracking-tight text-white/90 md:text-3xl lg:text-4xl">
-              Everything you need to learn smarter
-            </h2>
-            <p className="mt-4 text-base text-white/40 md:text-lg">
-              Powerful features, simple experience, total control.
-            </p>
-          </div>
-
-          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
-            {(
-              [
-                {
-                  icon: Zap,
-                  title: "Save clips fast",
-                  desc: "Select text on any webpage. One click saves it to your library with source and date.",
-                },
-                {
-                  icon: FolderOpen,
-                  title: "Clean library",
-                  desc: "Search, filter, and organize all your clips in one beautiful, distraction-free space.",
-                },
-                {
-                  icon: Brain,
-                  title: "Summaries on demand",
-                  desc: "Choose bullets, paragraph, or Q&A. AI creates the summary only when you ask.",
-                },
-                {
-                  icon: BarChart3,
-                  title: "Control & limits",
-                  desc: "Monthly usage tracking keeps you in control. Upgrade anytime for more summaries.",
-                },
-              ] as const
-            ).map((item, i) => (
-              <div
-                key={i}
-                className="group rounded-xl border border-white/[0.05] bg-white/[0.015] p-6 transition-colors duration-300 hover:border-violet-500/15 hover:bg-violet-500/[0.02]"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/[0.08] text-violet-400/70 transition-colors duration-300 group-hover:bg-violet-500/[0.12] group-hover:text-violet-400">
-                  <item.icon className="h-4.5 w-4.5" />
-                </div>
-                <h3 className="mt-5 text-[15px] font-semibold text-white/85">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-white/38">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
+      <section id="pricing" data-reveal className="border-b-2 border-[#101820] bg-[#eadbd4]">
+        <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8 lg:px-12 lg:py-16">
+          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end"><div><p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8e4737]">Usage, made legible</p><h2 className="mt-4 text-4xl font-black tracking-[-0.04em] sm:text-5xl">Start with the essentials.</h2></div><p className="max-w-sm text-sm font-bold leading-6 text-[#4c3b38]">Your clips and library are always yours. AI summaries use a monthly allowance so you stay in control.</p></div>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            <div className="border-2 border-[#101820] bg-[#fffaf0] p-7"><p className="text-xs font-bold uppercase tracking-[0.18em] text-[#e55436]">Included</p><h3 className="mt-4 text-3xl font-black">Clip + Library</h3><ul className="mt-6 space-y-3 text-sm font-bold">{["Save text from the web", "Personal clip library", "Source and date attached", "Existing summaries stay accessible"].map(item => <li key={item} className="flex gap-3"><Check className="h-4 w-4 shrink-0 text-[#e55436]" />{item}</li>)}</ul></div>
+            <div className="border-2 border-[#101820] bg-[#101820] p-7 text-[#fffaf0]"><p className="text-xs font-bold uppercase tracking-[0.18em] text-[#d9ff65]">When you need it</p><h3 className="mt-4 text-3xl font-black">On-demand summaries</h3><ul className="mt-6 space-y-3 text-sm font-bold text-[#fffaf0]">{["Bullets, paragraphs, or study notes", "Monthly usage limit shown clearly", "Request only what is useful now", "No automatic AI processing"].map(item => <li key={item} className="flex gap-3"><Check className="h-4 w-4 shrink-0 text-[#d9ff65]" />{item}</li>)}</ul></div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════ HOW IT WORKS ═══════════════ */}
-      <section
-        id="how-it-works"
-        className="border-t border-white/[0.05] px-6 py-24 md:py-32 lg:px-8"
-      >
-        <div className="mx-auto max-w-5xl">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-2xl font-bold tracking-tight text-white/90 md:text-3xl lg:text-4xl">
-              Three steps to smarter reading
-            </h2>
-            <p className="mt-4 text-base text-white/40 md:text-lg">
-              It takes less than 30&nbsp;seconds to go from reading to
-              ready-to-use notes.
-            </p>
-          </div>
-
-          <div className="mt-14 grid gap-4 md:grid-cols-3 md:gap-5">
-            {(
-              [
-                {
-                  step: "01",
-                  title: "Clip it",
-                  desc: "Highlight text on any webpage and click the Clipper Pro extension. Your clip is saved instantly.",
-                  icon: Bookmark,
-                },
-                {
-                  step: "02",
-                  title: "Organize it",
-                  desc: "View all your clips in a searchable library. Everything is timestamped and sourced.",
-                  icon: FolderOpen,
-                },
-                {
-                  step: "03",
-                  title: "Summarize it",
-                  desc: "Click Summarize, choose your format, and get AI-powered notes in seconds.",
-                  icon: Sparkles,
-                },
-              ] as const
-            ).map((item, i) => (
-              <div
-                key={i}
-                className="relative rounded-xl border border-white/[0.05] bg-[#0b0b12] p-7"
-              >
-                <span className="absolute right-6 top-5 text-4xl font-black text-white/[0.03]">
-                  {item.step}
-                </span>
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/[0.08] text-violet-400/70">
-                  <item.icon className="h-4.5 w-4.5" />
-                </div>
-                <h3 className="mt-5 text-base font-semibold text-white/85">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-white/38">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
+      <section id="faq" data-reveal className="bg-[#f4efe6]">
+        <div className="mx-auto max-w-3xl px-6 py-14 sm:px-8 lg:py-20">
+          <div className="text-center"><p className="text-xs font-bold uppercase tracking-[0.2em] text-[#e55436]">Good to know</p><h2 className="mt-4 text-4xl font-black tracking-[-0.04em] sm:text-5xl">Questions, answered.</h2></div>
+          <div className="mt-8 divide-y-2 divide-[#101820] border-y-2 border-[#101820]">{faqs.map(([question, answer]) => <details key={question} className="group py-4"><summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-base font-black focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#e55436]/40 [&::-webkit-details-marker]:hidden">{question}<ChevronDown className="h-5 w-5 shrink-0 transition-transform group-open:rotate-180" /></summary><p className="max-w-2xl pt-3 text-sm leading-6 text-[#50605f]">{answer}</p></details>)}</div>
         </div>
       </section>
 
-      {/* ═══════════════ PRIVACY & CONTROL ═══════════════ */}
-      <section
-        id="privacy"
-        className="border-t border-white/[0.05] px-6 py-24 md:py-32 lg:px-8"
-      >
-        <div className="mx-auto max-w-5xl">
-          <div className="mx-auto max-w-2xl text-center">
-            <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/[0.08]">
-              <Shield className="h-5 w-5 text-violet-400/70" />
-            </div>
-            <h2 className="text-2xl font-bold tracking-tight text-white/90 md:text-3xl lg:text-4xl">
-              Privacy-first by design
-            </h2>
-            <p className="mt-4 text-base text-white/40 md:text-lg">
-              Your data stays yours. AI is a tool you control, not one that
-              controls you.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-4 md:grid-cols-3 md:gap-5">
-            {(
-              [
-                {
-                  icon: Eye,
-                  title: "AI is opt-in",
-                  desc: "Summaries are generated only when you explicitly request them. No background processing.",
-                },
-                {
-                  icon: Zap,
-                  title: "On-demand only",
-                  desc: "Click Summarize to use AI. Your clips are stored without any AI involvement.",
-                },
-                {
-                  icon: BarChart3,
-                  title: "Monthly tracking",
-                  desc: "See exactly how many AI summaries you've used. Transparent limits, no surprises.",
-                },
-              ] as const
-            ).map((item, i) => (
-              <div
-                key={i}
-                className="rounded-xl border border-white/[0.05] bg-white/[0.015] p-6 text-center"
-              >
-                <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/[0.08] text-violet-400/70">
-                  <item.icon className="h-4.5 w-4.5" />
-                </div>
-                <h3 className="mt-5 text-[15px] font-semibold text-white/85">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-white/38">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+      <section data-reveal className="border-t-2 border-[#101820] bg-[#fffaf0]">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-6 py-14 sm:px-8 md:flex-row md:items-end lg:px-12 lg:py-16"><div><h2 className="max-w-2xl text-4xl font-black leading-[1.05] tracking-[-0.04em] sm:text-6xl">Make your next tab worth keeping.</h2></div><Link href="/login" className="inline-flex min-h-12 items-center gap-3 border-2 border-[#101820] bg-[#d9ff65] px-6 text-sm font-black shadow-[4px_4px_0_#101820] transition-transform hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#101820] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#e55436]/40">Sign in with Google <ArrowRight className="h-4 w-4" /></Link></div>
       </section>
-
-      {/* ═══════════════ FAQ ═══════════════ */}
-      <section
-        id="faq"
-        className="border-t border-white/[0.05] px-6 py-24 md:py-32 lg:px-8"
-      >
-        <div className="mx-auto max-w-2xl">
-          <h2 className="text-center text-2xl font-bold tracking-tight text-white/90 md:text-3xl lg:text-4xl">
-            Frequently asked questions
-          </h2>
-
-          <div className="mt-12 space-y-3">
-            {[
-              {
-                q: "What browsers does Clipper Pro support?",
-                a: "Clipper Pro is a Chrome extension that works on all Chromium-based browsers including Google Chrome, Microsoft Edge, Brave, and Arc.",
-              },
-              {
-                q: "How does the AI summarization work?",
-                a: "When you click Summarize on any clip, we send that text to our AI model which generates a summary in your chosen format (bullets, paragraph, or Q&A). AI is never used unless you explicitly request it.",
-              },
-              {
-                q: "Is my data private?",
-                a: "Yes. Your clips are stored securely in your account. AI processing happens only when you click Summarize, and we don't use your data to train models.",
-              },
-              {
-                q: "Can I export my clips?",
-                a: "We're working on export features including Markdown and CSV formats. Stay tuned for updates.",
-              },
-              {
-                q: "What happens when I hit my monthly summary limit?",
-                a: "Your clips and existing summaries remain fully accessible. You simply can't generate new AI summaries until your limit resets on the 1st of the next month, or you upgrade to Pro.",
-              },
-            ].map((item, i) => (
-              <details
-                key={i}
-                className="group rounded-xl border border-white/[0.05] bg-white/[0.015] transition-colors duration-200 open:border-violet-500/10 open:bg-violet-500/[0.015]"
-              >
-                <summary className="flex cursor-pointer items-center justify-between px-5 py-4 text-[13px] font-medium text-white/70 marker:content-none [&::-webkit-details-marker]:hidden">
-                  {item.q}
-                  <ChevronRight className="h-3.5 w-3.5 shrink-0 text-white/20 transition-transform duration-200 group-open:rotate-90" />
-                </summary>
-                <div className="px-5 pb-4 text-[13px] leading-relaxed text-white/40">
-                  {item.a}
-                </div>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════ FINAL CTA ═══════════════ */}
-      <section className="border-t border-white/[0.05] px-6 py-24 md:py-32 lg:px-8">
-        <div className="relative mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl font-bold tracking-tight text-white/90 md:text-3xl lg:text-4xl">
-            Start turning reading into knowledge
-          </h2>
-          <p className="mt-4 text-base text-white/40 md:text-lg">
-            Join thousands of learners who save time and learn more with Clipper
-            Pro.
-          </p>
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-2 rounded-lg bg-violet-600 px-7 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b12]"
-            >
-              Sign in with Google
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-            <p className="text-[13px] text-white/25">
-              Free forever. No credit card required.
-            </p>
-          </div>
-        </div>
-      </section>
-    </>
+    </div>
   );
 }

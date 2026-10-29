@@ -88,21 +88,21 @@ export default function AiSummaryPanel({
   return (
     <div
       dir="rtl"
-      className="min-h-[70vh] bg-gradient-to-b from-amber-50/60 via-orange-50/30 to-white px-4 sm:px-6 py-6"
+      className="min-h-[70vh] bg-background px-4 py-6 sm:px-6"
     >
       <div className="mx-auto max-w-4xl">
         {/* Top switcher */}
         <div className="w-full rounded-2xl p-1.5 relative">
           {/* Base background */}
-          <div className="absolute inset-0 rounded-2xl bg-white/60 backdrop-blur-sm border border-amber-200/30 shadow-sm" />
+          <div className="absolute inset-0 rounded-lg border border-border/70 bg-secondary/80 shadow-sm backdrop-blur-sm" />
 
           {/* Sliding pill indicator */}
           <div
             className={[
               "absolute top-1.5 bottom-1.5 right-1.5 w-[calc(33.333%-0.375rem)]",
-              "rounded-[14px]",
-              "bg-white/90 supports-[backdrop-filter]:bg-white/80 backdrop-blur-xl",
-              "border border-slate-200/70",
+              "rounded-md",
+              "bg-card/90 supports-[backdrop-filter]:bg-card/80 backdrop-blur-xl",
+              "border border-border/70",
               "shadow-[0_10px_25px_-20px_rgba(0,0,0,0.45)]",
               "will-change-transform",
               "transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)]",
@@ -127,18 +127,18 @@ export default function AiSummaryPanel({
                   type="button"
                   onClick={() => switchFormat(t.format)}
                   className={[
-                    "relative z-10 h-12 rounded-[14px] px-4",
+                    "relative z-10 h-12 rounded-md px-4",
                     "flex items-center justify-center gap-2",
                     "outline-none transition-colors duration-300",
                     active
-                      ? "text-slate-900"
-                      : "text-slate-600 hover:text-slate-900",
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground",
                   ].join(" ")}
                 >
                   <Icon
                     className={[
                       "w-5 h-5 transition-colors duration-300",
-                      active ? "text-amber-600" : "text-slate-500",
+                      active ? "text-primary" : "text-muted-foreground",
                     ].join(" ")}
                   />
                   <span
@@ -155,7 +155,7 @@ export default function AiSummaryPanel({
         </div>
 
         {/* Main card */}
-        <div className="mt-5 rounded-[24px] bg-white border border-slate-200/50 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.10)] overflow-hidden">
+        <div className="mt-5 overflow-hidden rounded-lg border border-border/70 bg-card shadow-[0_20px_60px_-40px_rgba(26,26,26,0.2)]">
           <div className="px-6 sm:px-10 py-10 sm:py-14">
             <div
               className="transition-all duration-300 ease-[cubic-bezier(.16,1,.3,1)]"
@@ -175,15 +175,15 @@ export default function AiSummaryPanel({
               ) : !hasResult ? (
                 // Empty state
                 <div className="mx-auto max-w-xl text-center">
-                  <div className="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100/80 shadow-sm flex items-center justify-center">
+                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 shadow-sm">
                     <SparklesIcon className="w-7 h-7 text-amber-500" />
                   </div>
 
-                  <h2 className="mt-6 text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                  <h2 className="mt-6 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                     {title}
                   </h2>
 
-                  <p className="mt-3 text-[15px] leading-7 text-slate-500">
+                  <p className="mt-3 text-[15px] leading-7 text-muted-foreground">
                     {desc}
                   </p>
 

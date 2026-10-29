@@ -186,7 +186,7 @@ function TosModal({
       }}
     >
       <div
-        className="relative w-full max-w-[480px] mx-4 bg-[#fafafa] dark:bg-[#1c1c1e] rounded-[20px] overflow-hidden"
+        className="relative mx-4 w-full max-w-[480px] overflow-hidden rounded-lg border border-border bg-card"
         style={{
           boxShadow:
             "0 25px 80px -12px rgba(0,0,0,0.35), 0 0 0 0.5px rgba(0,0,0,0.08)",
@@ -197,7 +197,7 @@ function TosModal({
           {/* AI icon */}
           <div className="mx-auto mb-5 relative">
             <div
-              className="w-[72px] h-[72px] mx-auto rounded-[22px] flex items-center justify-center"
+              className="mx-auto flex h-[72px] w-[72px] items-center justify-center rounded-lg"
               style={{
                 background:
                   "linear-gradient(145deg, #6366f1, #8b5cf6, #a855f7)",
@@ -220,10 +220,10 @@ function TosModal({
             </div>
           </div>
 
-          <h2 className="text-[22px] font-bold tracking-tight text-[#1d1d1f] dark:text-white leading-tight">
+          <h2 className="text-[22px] font-semibold leading-tight tracking-tight text-foreground">
             AI Terms & Conditions
           </h2>
-          <p className="mt-2 text-[14px] leading-relaxed text-[#86868b] max-w-[340px] mx-auto">
+          <p className="mx-auto mt-2 max-w-[340px] text-[14px] leading-relaxed text-muted-foreground">
             To activate AI-powered features, please review and agree to the
             following terms.
           </p>
@@ -233,7 +233,7 @@ function TosModal({
         <div className="mx-6 mb-4 relative">
           <div
             onScroll={handleScroll}
-            className="rounded-2xl border border-[#e5e5ea] dark:border-[#38383a] bg-white dark:bg-[#2c2c2e] max-h-[260px] overflow-y-auto px-5 py-4"
+            className="max-h-[260px] overflow-y-auto rounded-lg border border-border bg-background px-5 py-4"
             style={{
               scrollbarWidth: "thin",
               scrollbarColor: "#d1d1d6 transparent",
@@ -285,7 +285,7 @@ function TosModal({
             <button
               type="button"
               onClick={onAccept}
-              className="w-full h-[50px] rounded-[14px] text-[15px] font-semibold text-white transition-all duration-200 active:scale-[0.98]"
+              className="h-[50px] w-full rounded-md bg-primary text-[15px] font-semibold text-primary-foreground transition-colors hover:bg-primary/90 active:scale-[0.98]"
               style={{
                 background: "linear-gradient(145deg, #6366f1, #8b5cf6)",
                 boxShadow: "0 4px 16px -2px rgba(99,102,241,0.35)",
@@ -296,7 +296,7 @@ function TosModal({
             <button
               type="button"
               onClick={onDecline}
-              className="w-full h-[50px] rounded-[14px] text-[15px] font-semibold text-[#007aff] dark:text-[#0a84ff] bg-[#f2f2f7] dark:bg-[#2c2c2e] hover:bg-[#e8e8ed] dark:hover:bg-[#3a3a3c] transition-all duration-200 active:scale-[0.98]"
+              className="h-[50px] w-full rounded-md bg-secondary text-[15px] font-semibold text-secondary-foreground transition-colors hover:bg-accent active:scale-[0.98]"
             >
               Not Now
             </button>

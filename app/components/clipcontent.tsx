@@ -51,7 +51,7 @@ export default function ClipContentSheet({
   };
 
   return (
-    <div className="min-h-[70vh] bg-gradient-to-b from-slate-50/80 to-white px-3 sm:px-6 py-6">
+    <div className="min-h-[70vh] bg-background px-3 py-6 sm:px-6">
       <div
         dir="rtl"
         className={[
@@ -94,7 +94,7 @@ export default function ClipContentSheet({
 
           {/* source */}
           {domain && (
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200/60">
+            <div className="flex items-center gap-2 rounded-md border border-border bg-secondary px-3 py-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               <span
                 dir="ltr"
@@ -109,7 +109,7 @@ export default function ClipContentSheet({
 
         {/* Article */}
         <div className="px-6 sm:px-12 lg:px-16 py-10 sm:py-14">
-          <h1 className="text-center text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold text-slate-900 leading-[1.3] tracking-tight">
+          <h1 className="text-center text-[26px] font-semibold leading-[1.3] tracking-tight text-foreground sm:text-[32px] lg:text-[38px]">
             {clip.title || "بدون عنوان"}
           </h1>
 
@@ -145,7 +145,7 @@ export default function ClipContentSheet({
 
           <div className="mt-10 relative">
             <div className="absolute left-1/2 -translate-x-1/2 w-16 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-            <div className="pt-10 mx-auto max-w-3xl space-y-6 text-[16px] sm:text-[17px] text-slate-700 leading-[1.9]">
+            <div className="mx-auto max-w-3xl space-y-6 pt-10 text-[16px] leading-[1.9] text-foreground sm:text-[17px]">
               {paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}

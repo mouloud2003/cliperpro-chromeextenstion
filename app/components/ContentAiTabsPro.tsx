@@ -101,25 +101,25 @@ export default function ContentAiTabsPro({
         className={[
           "relative w-full",
           sticky ? "sticky top-[60px] z-30" : "",
-          "bg-white/80 backdrop-blur-xl",
-          "supports-[backdrop-filter]:bg-white/65",
-          "border-b border-slate-200/40",
+          "bg-background/90 backdrop-blur-xl",
+          "supports-[backdrop-filter]:bg-background/75",
+          "border-b border-border/70",
           "pb-3 pt-2",
         ].join(" ")}
       >
         <div className="px-2 sm:px-0">
           <div className="relative w-full rounded-[18px] p-1.5">
             {/* Base */}
-            <div className="absolute inset-0 rounded-[18px] bg-slate-100/70 border border-slate-200/60" />
+            <div className="absolute inset-0 rounded-lg border border-border/70 bg-secondary/80" />
 
             {/* Indicator (no neon) */}
             <div
               className={[
                 "absolute top-1.5 bottom-1.5 left-1.5 w-[calc(50%-0.375rem)]",
-                "rounded-[14px]",
-                "bg-white/85 supports-[backdrop-filter]:bg-white/75 backdrop-blur-xl",
-                "border border-slate-200/60",
-                "shadow-[0_10px_25px_-20px_rgba(0,0,0,0.45)]",
+                "rounded-md",
+                "bg-card/90 supports-[backdrop-filter]:bg-card/80 backdrop-blur-xl",
+                "border border-border/70",
+                "shadow-sm",
                 "will-change-transform",
                 "transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)]",
               ].join(" ")}
@@ -140,11 +140,11 @@ export default function ContentAiTabsPro({
                     onClick={() => setTab(id)}
                     className={[
                       "group relative flex items-center justify-center gap-2",
-                      "rounded-[14px] px-4 py-2.5 sm:py-3",
+                      "rounded-md px-4 py-2.5 sm:py-3",
                       "outline-none transition-colors duration-300",
                       active
-                        ? "text-slate-900"
-                        : "text-slate-600 hover:text-slate-900",
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground",
                     ].join(" ")}
                   >
                     <Icon
@@ -166,8 +166,8 @@ export default function ContentAiTabsPro({
                           "ml-1 hidden sm:inline-flex",
                           "px-2 py-0.5 rounded-lg text-[11px] font-semibold",
                           active
-                            ? "bg-slate-900/5 text-slate-700"
-                            : "text-slate-500",
+                            ? "bg-primary/10 text-primary"
+                            : "text-muted-foreground",
                         ].join(" ")}
                       >
                         {badge}
@@ -194,8 +194,8 @@ export default function ContentAiTabsPro({
             aria-hidden={tab !== "content"}
             ref={contentRef}
             className={[
-              "rounded-2xl border border-slate-200/70 bg-white",
-              "shadow-[0_18px_45px_-38px_rgba(0,0,0,0.45)]",
+              "rounded-lg border border-border/70 bg-card",
+              "shadow-[0_18px_45px_-38px_rgba(26,26,26,0.2)]",
               "transition-all duration-700 ease-[cubic-bezier(.16,1,.3,1)]",
               tab === "content"
                 ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
@@ -211,8 +211,8 @@ export default function ContentAiTabsPro({
             aria-hidden={tab !== "ai"}
             ref={aiRef}
             className={[
-              "rounded-2xl border border-slate-200/70 bg-white",
-              "shadow-[0_18px_45px_-38px_rgba(0,0,0,0.45)]",
+              "rounded-lg border border-border/70 bg-card",
+              "shadow-[0_18px_45px_-38px_rgba(26,26,26,0.2)]",
               "transition-all duration-700 ease-[cubic-bezier(.16,1,.3,1)]",
               tab === "ai"
                 ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
