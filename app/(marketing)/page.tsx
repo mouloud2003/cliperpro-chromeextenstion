@@ -1,12 +1,11 @@
 import Link from "next/link";
+import MarketingScene from "../components/MarketingScene";
+import ReadingLoopSection from "../components/ReadingLoopSection";
 import {
   ArrowDownRight,
   ArrowRight,
-  BookOpen,
   Check,
   ChevronDown,
-  CircleHelp,
-  FileText,
   Folder,
   Highlighter,
   LockKeyhole,
@@ -147,37 +146,9 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="how-it-works" data-reveal className="border-b-2 border-[#101820] bg-[#d9ff65]">
-        <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8 lg:px-12 lg:py-20">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div><p className="text-xs font-bold uppercase tracking-[0.2em] text-[#e55436]">Your reading loop</p><h2 className="mt-4 max-w-2xl text-4xl font-black leading-[1.05] tracking-[-0.04em] sm:text-5xl">Capture once. Return smarter.</h2></div>
-            <ArrowDownRight className="hidden h-14 w-14 text-[#e55436] md:block" />
-          </div>
-          <div className="mt-10 grid gap-0 border-2 border-[#101820] md:grid-cols-3">
-            {[
-              ["01", "Highlight", "Select the sentence or passage worth keeping while you browse."],
-              ["02", "Organize", "Find every clip in one personal library with its source attached."],
-              ["03", "Study", "Choose bullets, a paragraph, or study notes when you need them."],
-            ].map(([number, title, text], index) => (
-              <div key={number} data-reveal className={`p-6 ${index < 2 ? "border-b-2 md:border-b-0 md:border-r-2" : ""} border-[#101820]`}>
-                <span className="text-sm font-black text-[#e55436]">{number}</span><h3 className="mt-12 text-2xl font-black">{title}</h3><p className="mt-3 max-w-xs text-sm leading-6 text-[#354341]">{text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ReadingLoopSection />
 
-      <section id="privacy" data-reveal className="border-b-2 border-[#101820] bg-[#101820] text-[#fffaf0]">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-14 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-12 lg:py-20">
-          <div><p className="text-xs font-bold uppercase tracking-[0.2em] text-[#ff927b]">Control is a feature</p><h2 className="mt-4 max-w-md text-4xl font-black leading-[1.05] tracking-[-0.04em] sm:text-5xl">Your library is yours.</h2><p className="mt-6 max-w-md text-base leading-7 text-[#b8c2bd]">Clip first. Decide later. Your reading stays organized without an automatic AI pass.</p></div>
-          <div className="grid gap-0 border-t border-white/25 sm:grid-cols-2 sm:border-l sm:border-t-0">
-            {[["AI on your terms", "Summaries happen only after you choose a clip and request a format.", Sparkles], ["Clear monthly limits", "See how much AI usage remains before you ask for the next summary.", CircleHelp], ["Sources stay attached", "Every saved clip keeps the page it came from close at hand.", FileText], ["Made for review", "Turn dense reading into bullets, paragraphs, or study notes.", BookOpen]].map(([title, text, Icon]) => {
-              const FeatureIcon = Icon as typeof Sparkles;
-              return <div key={title as string} className="border-b border-white/25 p-6 sm:border-r last:border-b-0"><FeatureIcon className="h-5 w-5 text-[#d9ff65]" /><h3 className="mt-6 font-black">{title as string}</h3><p className="mt-2 text-sm leading-6 text-[#b8c2bd]">{text as string}</p></div>;
-            })}
-          </div>
-        </div>
-      </section>
+      <MarketingScene />
 
       <section id="pricing" data-reveal className="border-b-2 border-[#101820] bg-[#eadbd4]">
         <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8 lg:px-12 lg:py-16">
