@@ -39,7 +39,7 @@ export default async function RootLayout({
       dir="ltr"
       className={`${ibmPlexSansArabic.variable} ${inter.variable}`}
     >
-      <body className="antialiased">
+      <body className={`${inter.className} antialiased`}>
         <Providers>
           <Topbar
             user={{ ...user, name: user.name || "", image: user.image || "" }}

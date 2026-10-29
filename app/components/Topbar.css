@@ -7,9 +7,9 @@
   padding-right: 1.25rem;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  border-bottom: 1px solid hsl(var(--border) / 0.7);
   height: 3.75rem;
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: hsl(var(--background) / 0.9);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
 }
@@ -30,18 +30,18 @@
   padding-inline-end: 1rem;
 
   border-radius: 0.875rem;
-  border: 1px solid rgba(226, 232, 240, 0.7);
+  border: 1px solid hsl(var(--border) / 0.8);
   outline-style: none;
   width: 100%;
   font-size: 0.8125rem;
   line-height: 1.25rem;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  background-color: #f8fafc;
+  background-color: hsl(var(--secondary));
 }
 .Topbar-middle .search-container:focus-within {
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
-  border-color: rgba(99, 102, 241, 0.35);
-  background-color: #ffffff;
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2);
+  border-color: hsl(var(--ring) / 0.45);
+  background-color: hsl(var(--card));
 }
 .search-input {
   width: 100%;

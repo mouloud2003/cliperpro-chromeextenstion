@@ -80,21 +80,21 @@ export function NotionCard({ clip, q }: { clip: ClipDTO; q: string }) {
     <Link
       href={`/library/${clip.id}`}
       aria-label={`Open clip: ${clip.title ?? "Untitled clip"}`}
-      className="group/card block h-full outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 dark:focus-visible:ring-offset-slate-950 rounded-xl"
+      className="group/card block h-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
     >
       <article
         dir="rtl"
         className={[
-          "relative h-full min-h-[180px] rounded-xl border p-5 flex flex-col overflow-hidden",
-          "bg-white dark:bg-slate-900",
+          "relative flex h-full min-h-[180px] flex-col overflow-hidden rounded-lg border p-5",
+          "bg-card",
           hasSummary
-            ? "border-amber-200/60 dark:border-amber-700/30"
-            : "border-slate-200 dark:border-slate-800",
+            ? "border-amber-200/80"
+            : "border-border",
           "transition-all duration-200 will-change-transform",
           "hover:-translate-y-[2px]",
           hasSummary
-            ? "hover:border-amber-400/80 hover:shadow-[0_6px_20px_rgba(245,158,11,0.10)]"
-            : "hover:border-indigo-500 hover:shadow-[0_4px_12px_rgba(99,102,241,0.10)]",
+            ? "hover:border-amber-400/80 hover:shadow-sm"
+            : "hover:border-primary/60 hover:shadow-sm",
         ].join(" ")}
       >
         {/* Subtle AI glow accent — top-right corner */}
@@ -107,10 +107,10 @@ export function NotionCard({ clip, q }: { clip: ClipDTO; q: string }) {
 
         {/* Top */}
         <div className="flex items-start justify-between gap-3 text-right">
-          <span className="max-w-[60%] truncate rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/40 px-2 py-1 text-xs text-slate-600 dark:text-slate-300">
+          <span className="max-w-[60%] truncate rounded-full border border-border bg-secondary px-2 py-1 text-xs text-secondary-foreground">
             <span dir="ltr">{highlight(domain, q)}</span>
           </span>
-          <span className="text-xs text-slate-500 dark:text-slate-400">
+          <span className="text-xs text-muted-foreground">
             {rel}
           </span>
         </div>
@@ -118,13 +118,13 @@ export function NotionCard({ clip, q }: { clip: ClipDTO; q: string }) {
         {/* Middle */}
         <div className="mt-4 space-y-2 text-right flex-1">
           <h3
-            className="text-[18px] font-semibold leading-[1.4] text-slate-800 dark:text-slate-100"
+            className="text-[18px] font-semibold leading-[1.4] text-foreground"
             style={clampStyle(2)}
           >
             {clip.title ? highlight(clip.title, q) : "Untitled clip"}
           </h3>
           <p
-            className="text-[14px] leading-normal text-slate-500 dark:text-slate-400"
+            className="text-[14px] leading-normal text-muted-foreground"
             style={clampStyle(3)}
           >
             {highlight(clip.textPreview, q)}
@@ -171,7 +171,7 @@ export function NotionCard({ clip, q }: { clip: ClipDTO; q: string }) {
             </span>
           )}
 
-          <span dir="ltr" className="text-slate-500 dark:text-slate-400">
+          <span dir="ltr" className="text-muted-foreground">
             {mins} min • {words} words
           </span>
         </div>
@@ -182,7 +182,7 @@ export function NotionCard({ clip, q }: { clip: ClipDTO; q: string }) {
 
 export function SkeletonCard() {
   return (
-    <div className="min-h-45 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+    <div className="min-h-45 rounded-lg border border-border bg-card p-5">
       <div className="flex items-start justify-between gap-3">
         <div className="h-6 w-28 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse" />
         <div className="h-3 w-20 rounded bg-slate-200 dark:bg-slate-800 animate-pulse" />

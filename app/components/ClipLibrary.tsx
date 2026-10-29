@@ -31,8 +31,8 @@ function SkeletonCard() {
 
 export function SkeletonGrid() {
   return (
-    <div className="main">
-      <main className="px-6 pb-10 pt-6">
+    <div className="min-h-screen bg-background">
+      <main className="mx-auto max-w-7xl px-6 pb-10 pt-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {Array.from({ length: 8 }).map((_, i) => (
             <SkeletonCard key={i} />
@@ -49,10 +49,10 @@ function EmptyState({ onCreateClip }: { onCreateClip: () => void }) {
     <div className="flex flex-col items-center justify-center min-h-[60vh] px-6 text-center">
       {/* Icon */}
       <div className="relative mb-6">
-        <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
-          <FileText className="w-9 h-9 text-indigo-400" />
+        <div className="flex h-20 w-20 items-center justify-center rounded-lg border border-border bg-secondary">
+          <FileText className="h-9 w-9 text-primary" />
         </div>
-        <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-200">
+        <div className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-md bg-primary shadow-sm">
           <Sparkles className="w-4 h-4 text-white" />
         </div>
       </div>
@@ -70,10 +70,7 @@ function EmptyState({ onCreateClip }: { onCreateClip: () => void }) {
       <button
         type="button"
         onClick={onCreateClip}
-        className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 active:scale-[0.97] shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300"
-        style={{
-          background: "linear-gradient(145deg, #6366f1, #8b5cf6)",
-        }}
+        className="mt-8 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 active:scale-[0.97]"
       >
         <Plus className="w-4 h-4" />
         Create Your First Clip
@@ -139,7 +136,7 @@ function CreateClipModal({
       }}
     >
       <div
-        className="relative w-full max-w-lg mx-4 bg-white dark:bg-[#1c1c1e] rounded-2xl overflow-hidden"
+        className="relative mx-4 w-full max-w-lg overflow-hidden rounded-lg border border-border bg-card"
         style={{
           boxShadow:
             "0 25px 80px -12px rgba(0,0,0,0.3), 0 0 0 0.5px rgba(0,0,0,0.08)",
@@ -170,7 +167,7 @@ function CreateClipModal({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Give your clip a name…"
-              className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-300 transition-all"
+              className="w-full rounded-md border border-input bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/40 transition-all focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
             />
           </div>
 
@@ -184,7 +181,7 @@ function CreateClipModal({
               onChange={(e) => setText(e.target.value)}
               placeholder="Paste or type your clip content…"
               rows={5}
-              className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-300 transition-all resize-none leading-relaxed"
+              className="w-full resize-none rounded-md border border-input bg-background px-4 py-3 text-sm leading-relaxed text-foreground placeholder:text-muted-foreground/40 transition-all focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
             />
           </div>
 
